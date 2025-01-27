@@ -1,0 +1,103 @@
+{
+    "id": 4,
+    "name": "olive variety name",
+    "country_of_origin": 1,
+    "heritability": "text", 
+    "heritability_characters": "text",
+     "usability": "Both for Oil and Table consumption",
+     "leaf_morphology": "text",
+     "fruit_morphology": "text",
+     "fruit_size": "2",
+     "cultivation_level": "Average",
+     "diffusion_area": "text",
+     
+     "tree": {
+         "tree_vigor": "Low",
+         "density_of_canopy": "Low",
+         "tree_growth_habit": "Dropping",
+         "lateral_shoots": "Low", 
+         "leaf_area": 5.0, 
+         "tree_bearing": "text",
+         "tree_pictures": ["path 1", "path 2", "path n"],
+         "leaf_pictures": ["path 1", "path 2", "path n"]
+         },
+         
+     "fruit": {
+         "fruit_weight": 34.0,
+         "fruit_nipple": "Absent",
+           "fruit_lenticle_presence": "Absent",
+           "fruit_lenticle_size": "Absent",
+           "fruit_color_full_maturity": "Green", 
+           "endocarp_weight": "Low",
+           "endocarp_shape": "Elliptic", 
+           "endocarp_symmetry": "Symmetric",
+           "appex_shape": "Pointed",
+           "base_shape": "Pointed", 
+           "surface": "Scabrous",
+           "grooves": "Low",
+           "appex_termination": "Mucronate",
+           "pulp_to_pit_ratio": "Low",
+           "culture_adaptation": "Superintensive",
+           "fruit_pictures": ["path 1", "path 2", "path n"],
+           "endocarp_pictures": ["path 1", "path 2", "path n"]
+        },
+     "blooming": {
+            "blooming_time": 1,
+            "blooming_duration": 1, 
+            "self_compatibility": "Yes", 
+            "sensitivity_salinity": "Yes", 
+            "sensitivity_pathogens": "Yes", 
+            "sensitivity_drought": "Yes", 
+            "ripening_time": 1, 
+            "chemical_composition_fruit": "234", 
+            "ripening_indexes": 1, 
+            "fruit_retention_force": 1, 
+            "pulp_firmness": 1
+        },
+            
+        "productivity": {
+         "fruit_productivity": 0, 
+         "oil_yield_fresh_fruit": 3.0, 
+         "oil_yield_dry_fruit": 3.0, 
+         "bearing_entry": 1, 
+         "productive_efficiency": 34.0, 
+         "fruit_number_per_kg": 3, 
+         "percentage_flesh_ratio": 7.0, 
+         "percentage_endocarp_ratio": 7.0
+             },
+      
+         "oil": {
+         "fatty_acid_composition": "7", 
+         "phenolic_composition": "7", 
+         "volatile_compounds_composition": "7", 
+         "free_fatty_acids_percentage": 7.0, 
+         "peroxide_index": 7.0, 
+         "uv_determination_232nm": 7.0, 
+         "uv_determination_270nm": 7.0, 
+         "delta_k_uv_determinations": 7.0, 
+         "fatty_acid_methyl_esters": 7.0, 
+         "thocopherols_concentration": 7.0, 
+         "c14_organolectic_characteristic": "Yes", 
+         "intensity_fruity_flavour": 1
+         },
+         
+   "biotics":  {
+       "verticillium": "Yes", 
+       "xylella_fastidiosa": "Yes", 
+       "colletotrichum": "Yes", 
+       "spilocea_oleagina": "Yes", 
+       "bactrocera_oleae": "Yes", 
+       "pseudomona_savastanoi": "Yes", 
+       "other_diseases": "Yes"
+   },
+    "abiotics": {
+        "chilling_requirement": 1, 
+        "drought_tolerance": "Yes", 
+        "frost_tolerance": "Yes", 
+        "salinity": "Yes", 
+        "limestone": "Yes", 
+        "waterlogging": "Yes", 
+        "herbicides": "Yes", 
+        "wound": "Yes"
+    }
+}
