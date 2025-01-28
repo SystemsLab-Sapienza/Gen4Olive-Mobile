@@ -12,7 +12,7 @@
     "expo": "^52.0.27",
     "expo-asset": "~11.0.2",
     "expo-camera": "~16.0.14",
-    "expo-constants": "~17.0.4",
+    "expo-constants": "~17.0.5",
     "expo-file-system": "~18.0.7",
     "expo-font": "~13.0.3",
     "expo-keep-awake": "~14.0.2",
@@ -42,7 +42,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/SystemsLab-Sapienza/Gen4Olive-Mobile/issues"
   },
