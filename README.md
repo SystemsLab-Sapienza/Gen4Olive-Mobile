@@ -52,3 +52,35 @@ To keep the project up-to-date, you can follow these steps:
     ```bash
     npm start -- --reset-cache
     ```
+
+## Building the App
+
+1. **Expo account Login**:
+    ```bash
+    eas login
+    ```
+
+2. **Create a build**:
+    ```bash
+    eas build --platform android
+    ```
+
+2. **Login Expo dev account**:
+    ```bash
+    https://expo.dev/
+    ```
+
+3. **Download build artifact (.aab)**
+    
+4. **Download bundletool**:
+    ```bash
+    https://github.com/google/bundletool/releases
+    ```
+
+5. **Generate apk**:
+    ```bash
+    java -jar bundletool<vesion>.jar build-apks \
+    --bundle=path/to/your/app.aab \
+    --output=path/to/output.apks \
+    --mode=universal
+    ```
