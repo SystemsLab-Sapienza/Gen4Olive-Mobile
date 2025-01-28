@@ -8,15 +8,12 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import ExitConfirmation from './src/components/ExitConfirmation';
 
 export default function App() {
+
+  // State variables
   const [page, setPage] = useState('menu');
   const [previous, setPrevious] = useState('menu');
   const [url, setUrl] = useState([]);
   const [orientation, setOrientation] = useState(1);
-
-  // Lock orientation on component mount
-  useEffect(() => {
-    lockOrientation();
-  }, []);
 
   // Lock orientation to PORTRAIT
   const lockOrientation = async () => {
@@ -26,7 +23,11 @@ export default function App() {
     const o = await ScreenOrientation.getOrientationAsync();
     setOrientation(o);
   };
-  
+
+  // Lock orientation on component mount
+  useEffect(() => {
+    lockOrientation();
+  }, []);
 
   // Map page state to corresponding component
   const pageComponents = {
