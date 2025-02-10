@@ -1,13 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { Menu } from './src/features/Menu';
 import { List } from './src/features/List';
 import { Picture } from './src/features/Camera';
 import { Info } from './src/features/Info';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import ExitConfirmation from './src/components/ExitConfirmation';
+import { useTranslation } from 'react-i18next';
+import { useLocales } from 'expo-localization';
+import i18n from './src/i18n';
 
 export default function App() {
+
+  // i18n
+  const { t } = useTranslation();
+  const locales = useLocales();
+  useEffect(() => {
+    i18n.changeLanguage(locales[0].languageCode);
+  }, [locales, i18n]);
+
+  
 
   // State variables
   const [page, setPage] = useState('menu');
@@ -27,7 +39,7 @@ export default function App() {
   // Lock orientation on component mount
   useEffect(() => {
     lockOrientation();
-  }, []);
+  }, [lockOrientation]);
 
   // Map page state to corresponding component
   const pageComponents = {
@@ -42,6 +54,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <View>
+        <Text>{t('welcome')}</Text>
+      </View>
       {pageComponents[page]}
       <ExitConfirmation />
     </View>
