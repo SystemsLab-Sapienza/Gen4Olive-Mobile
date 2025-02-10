@@ -7,41 +7,32 @@ export const Paragraph = ({ info, api }) => {
 
   // Determine the section title and data based on the info prop
   switch (info) {
-    case 'description':
-      sectionTitle = 'Description';
-      sectionData = Object.entries(api).filter(([key, value]) => typeof value !== 'object');
+    case 'pest_and_disease':
+      sectionTitle = 'Tolerance to Pests and Diseases';
+      sectionData = Object.entries(api.pest_and_disease);
       break;
-    case 'productivity':
-      sectionTitle = 'Productivity';
-      sectionData = Object.entries(api.productivity);
+    case 'olive_yield':
+      sectionTitle = 'Olive Oil Yield and Quality';
+      sectionData = Object.entries(api.olive_yield);
       break;
-    case 'biotics':
-      sectionTitle = 'Biotics';
-      sectionData = Object.entries(api.biotics);
+    case 'agronomic_traits':
+      sectionTitle = 'Agronomic Traits';
+      sectionData = Object.entries(api.agronomic_traits);
       break;
-    case 'abiotics':
-      sectionTitle = 'Abiotics';
-      sectionData = Object.entries(api.abiotics);
+    case 'phenological_process':
+      sectionTitle = 'Phenological Process Evaluation';
+      sectionData = Object.entries(api.phenological_process);
       break;
-    case 'fruit':
-      sectionTitle = 'Fruit';
-      sectionData = Object.entries(api.fruit);
+    case 'climate_adaptability':
+      sectionTitle = 'Adaptability to Climate';
+      sectionData = Object.entries(api.climate_adaptability);
       break;
-    case 'tree':
-      sectionTitle = 'Tree';
-      sectionData = Object.entries(api.tree);
-      break;
-    case 'blooming':
-      sectionTitle = 'Blooming';
-      sectionData = Object.entries(api.blooming);
-      break;
-    case 'oil':
-      sectionTitle = 'Oil';
-      sectionData = Object.entries(api.oil);
+    case 'olive_fruit_aptitude':
+      sectionTitle = 'Table Olive Aptitude';
+      sectionData = Object.entries(api.olive_fruit_aptitude);
       break;
     default:
-      sectionTitle = '';
-      sectionData = [];
+      break;
   }
 
   const getColor = (index, selectedFraction) => {

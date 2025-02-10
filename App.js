@@ -19,8 +19,6 @@ export default function App() {
     i18n.changeLanguage(locales[0].languageCode);
   }, [locales, i18n]);
 
-  
-
   // State variables
   const [page, setPage] = useState('menu');
   const [previous, setPrevious] = useState('menu');
@@ -44,8 +42,8 @@ export default function App() {
   // Map page state to corresponding component
   const pageComponents = {
     menu: <Menu setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} />,
-    oliveList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} />,
-    diseaseList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} />,
+    oliveList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} type='olive' />,
+    diseaseList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} type='disease' />,
     oliveDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} />,
     diseaseDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} />,
     infoOlive: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} />,
@@ -54,11 +52,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text>{t('welcome')}</Text>
-      </View>
       {pageComponents[page]}
-      <ExitConfirmation />
+      <ExitConfirmation t={t} />
     </View>
   );
 }

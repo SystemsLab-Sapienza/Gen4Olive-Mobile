@@ -4,18 +4,16 @@ import { Icon } from '../components/Icon';
 
 export const Sections = ({ page, setInfo }) => {
   const iconsData = [
-    { caption: 'Description', img: require('../../assets/DescriptionColored.png'), info: 'description' },
-    { caption: 'Productivity', img: require('../../assets/ProductivityColored.png'), info: 'productivity' },
-    { caption: 'Biotics', img: require('../../assets/BioticsColored.png'), info: 'biotics' },
-    { caption: 'Abiotics', img: require('../../assets/AbioticsColored.png'), info: 'abiotics' },
-    { caption: 'Fruit', img: require('../../assets/FruitColored.png'), info: 'fruit' },
-    { caption: 'Tree', img: require('../../assets/TreeColored.png'), info: 'tree' },
-    { caption: 'Blooming', img: require('../../assets/BloomingColored.png'), info: 'blooming' },
-    { caption: 'Oil', img: require('../../assets/OilColored.png'), info: 'oil' },
+    { caption: 'Tolerance to Pests and Diseases', img: require('../../assets/BioticsColored.png'), info: 'pest_and_disease' },
+    { caption: 'Olive Oil Yield and Quality', img: require('../../assets/OilColored.png'), info: 'olive_yield' },
+    { caption: 'Agronomic Traits', img: require('../../assets/TreeColored.png'), info: 'agronomic_traits' },
+    { caption: 'Phenological Process Evaluation', img: require('../../assets/ProductivityColored.png'), info: 'phenological_process' },
+    { caption: 'Adaptability to Climate', img: require('../../assets/AbioticsColored.png'), info: 'climate_adaptability' },
+    { caption: 'Table Olive Aptitude', img: require('../../assets/FruitColored.png'), info: 'olive_fruit_aptitude' },
   ];
 
   // Split icons into two arrays, each representing a row
-  const iconsRows = [iconsData.slice(0, 4), iconsData.slice(4)];
+  const iconsRows = [iconsData.slice(0, 3), iconsData.slice(3)];
 
   return (
     <View style={styles.container}>

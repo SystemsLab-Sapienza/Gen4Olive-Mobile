@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   View,
   StyleSheet,
-  Text,
   Image,
   ScrollView,
   TouchableOpacity,
@@ -10,7 +9,8 @@ import {
 import { Item } from '../components/Item';
 import { Searchbar } from 'react-native-paper';
 
-export const List = ({ setPage, page, previous, setPrevious, url }) => {
+export const List = ({ setPage, page, previous, setPrevious, url, type }) => {
+  
   const [searchQuery, setSearchQuery] = useState('');
   const [data, setData] = useState([]);
 
@@ -19,7 +19,7 @@ export const List = ({ setPage, page, previous, setPrevious, url }) => {
       try {
         const response = await fetch(url);
         const jsonData = await response.json();
-        setData(jsonData);
+        setData(jsonData['olives']);
       } catch (error) {
         console.error(error);
       }
@@ -27,22 +27,32 @@ export const List = ({ setPage, page, previous, setPrevious, url }) => {
     fetchData();
   }, [url]);
 
-  const filteredData = data.filter((olive) =>
-    olive.olive.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredData = data.filter((olive) => {
+    if (olive.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+      return true;
+    }
+    for (synonym of olive.synonyms){
+      if (synonym.toLowerCase().includes(searchQuery.toLowerCase())) {
+        return true;
+      }
+    }
+    return false;
+  });
 
-  const renderItem = (olive) => (
-    <Item
-      key={olive.id} // Assuming each olive has a unique id
-      img={require('../../assets/OliveImg.png')}
-      title={olive.olive}
-      caption={olive.text}
-      onPress={() => {
-        setPrevious(page);
-        setPage(page === 'oliveList' ? 'infoOlive' : 'infoDisease');
-      }}
-    />
-  );
+  const renderItem = useMemo(() => (olive) => {
+    return (
+      <Item
+        key={olive.id} // Assuming each olive has a unique id
+        imgUrl={olive.thumbnail}
+        title={olive.name}
+        caption={olive.synonyms.join(', ')}
+        onPress={() => {
+          setPrevious(page);
+          setPage(page === 'oliveList' ? 'infoOlive' : 'infoDisease');
+        }}
+      />
+    );
+  }, [page, setPrevious, setPage]);
 
   return (
     <ScrollView style={styles.container}>

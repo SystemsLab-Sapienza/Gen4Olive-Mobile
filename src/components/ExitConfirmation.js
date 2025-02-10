@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BackHandler, Modal, Text, View, Button, StyleSheet } from 'react-native';
 
-const ExitConfirmation = () => {
+const ExitConfirmation = ({ t }) => {
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
@@ -36,11 +36,11 @@ const ExitConfirmation = () => {
     >
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          <Text style={styles.message}>Are you sure you want to leave?</Text>
+          <Text style={styles.message}>{t('exitMessage')}</Text>
           <View style={styles.buttonContainer}>
-            <Button onPress={handleConfirmLeave} title="Yes" color="#5F5F2E" />
+            <Button onPress={handleConfirmLeave} title={t('yes')} color="#5F5F2E" />
             <View style={styles.buttonSpacer} />
-            <Button onPress={handleCancelLeave} title="No" color="#5F5F2E" />
+            <Button onPress={handleCancelLeave} title={t('no')} color="#5F5F2E" />
           </View>
         </View>
       </View>

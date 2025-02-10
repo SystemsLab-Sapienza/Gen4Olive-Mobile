@@ -1,12 +1,13 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity, Image, View } from 'react-native';
 
-export const Item = ({ img, title, caption, onPress }) => {
+export const Item = ({ imgUrl, title, caption, onPress }) => {
+
   return (
     <TouchableOpacity style={styles.item} onPress={onPress}>
       <View style={styles.container}>
         <View style={styles.cardImg}>
-          <Image source={img} style={styles.img} />
+          <Image source={{ uri: imgUrl }} style={styles.img} />
         </View>
         <View style={styles.cardText}>
           <Text style={styles.title}>{title}</Text>
@@ -16,8 +17,6 @@ export const Item = ({ img, title, caption, onPress }) => {
     </TouchableOpacity>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   item: {
@@ -46,7 +45,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
-
 
 export default Item;

@@ -10,7 +10,8 @@ export const Info = ({ setPage, page, previous, setPrevious }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://649020861e6aa71680caa7bf.mockapi.io/gen4olive/olive');
+        // const response = await fetch('https://649020861e6aa71680caa7bf.mockapi.io/gen4olive/olive');
+        const response = await fetch('https://gen4olive-backend.vercel.app/api/mobile/olive?pk=1');
         const data = await response.json();
         setApi(data[0]);
       } catch (error) {

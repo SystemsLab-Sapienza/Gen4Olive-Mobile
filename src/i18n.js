@@ -4,14 +4,11 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
   en: {
     translation: {
+      exitMessage: 'Are you sure you want to leave?',
+      no: 'No',
+      yes: 'Yes',
       welcome: 'Welcome!',
       greeting: 'Hello, {{name}}!',
-    },
-  },
-  it: {
-    translation: {
-      welcome: 'Benvenuto!',
-      greeting: 'Ciao, {{name}}!',
     },
   },
 };
