@@ -35,17 +35,6 @@ export const Paragraph = ({ info, api }) => {
       break;
   }
 
-  const getColor = (index, selectedFraction) => {
-    if (index <= selectedFraction) {
-      // Calcola il colore in base all'indice
-      const red = Math.round(255 * (1 - index / 5)); // Rosso diminuisce
-      const green = Math.round(200 * (index / 5)); // Verde aumenta
-      const blue = 0; // Blu rimane 0
-      return `rgb(${red}, ${green}, ${blue})`; // Colore dal rosso al giallo al verde
-    }
-    return 'gray'; // Colore grigio per i pulsanti non selezionati
-  };
-
   const renderButtons = (selectedFraction) => {
     const buttons = [];
     for (let i = 1; i <= 5; i++) {
@@ -54,7 +43,7 @@ export const Paragraph = ({ info, api }) => {
           key={i}
           style={[
             styles.button,
-            { backgroundColor: getColor(i, selectedFraction) },
+            { backgroundColor: '#5F5F2E' },
           ]}
         >
         </View>
@@ -70,7 +59,7 @@ export const Paragraph = ({ info, api }) => {
         {sectionData.map(([key, value]) => (
           <View key={key} style={styles.row}>
             <Text style={styles.key}>{key}:</Text>
-            {key !== 'country_of_origin' && key !== 'fruit_size' ? 
+            {value.constructor !== Number ?
               <Text style={styles.value}>{value}</Text> 
             : 
             <View style={[styles.value, { flexDirection: 'row'}]}>

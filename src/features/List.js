@@ -9,7 +9,7 @@ import {
 import { Item } from '../components/Item';
 import { Searchbar } from 'react-native-paper';
 
-export const List = ({ setPage, page, previous, setPrevious, url, type }) => {
+export const List = ({ setPage, page, previous, setPrevious, url, setInfoId }) => {
   
   const [searchQuery, setSearchQuery] = useState('');
   const [data, setData] = useState([]);
@@ -19,7 +19,16 @@ export const List = ({ setPage, page, previous, setPrevious, url, type }) => {
       try {
         const response = await fetch(url);
         const jsonData = await response.json();
-        setData(jsonData['olives']);
+        switch (page) {
+          case 'oliveList':
+            setData(jsonData.olives);
+            break;
+          case 'diseaseList':
+            setData(jsonData.gbanks);
+            break;
+          default:
+            break;
+        }
       } catch (error) {
         console.error(error);
       }
@@ -27,31 +36,57 @@ export const List = ({ setPage, page, previous, setPrevious, url, type }) => {
     fetchData();
   }, [url]);
 
-  const filteredData = data.filter((olive) => {
-    if (olive.name.toLowerCase().includes(searchQuery.toLowerCase())) {
-      return true;
+  const filteredData = useMemo(() => data.filter((item) => {
+    switch (page) {
+      case 'oliveList':
+        if (item.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+          return true;
+        }
+        for (synonym of item.synonyms){
+          if (synonym.toLowerCase().includes(searchQuery.toLowerCase())) {
+            return true;
+          }
+        }
+        return false;
+      case 'diseaseList':
+        return item.acronym.toLowerCase().includes(searchQuery.toLowerCase());
+      default:
+        return false;
     }
-    for (synonym of olive.synonyms){
-      if (synonym.toLowerCase().includes(searchQuery.toLowerCase())) {
-        return true;
-      }
-    }
-    return false;
-  });
+  }), [data, searchQuery, page]);
 
-  const renderItem = useMemo(() => (olive) => {
-    return (
-      <Item
-        key={olive.id} // Assuming each olive has a unique id
-        imgUrl={olive.thumbnail}
-        title={olive.name}
-        caption={olive.synonyms.join(', ')}
-        onPress={() => {
-          setPrevious(page);
-          setPage(page === 'oliveList' ? 'infoOlive' : 'infoDisease');
-        }}
-      />
-    );
+  const renderItem = useMemo(() => (item) => {
+    switch (page) {
+      case 'oliveList':
+        return (
+          <Item
+            key={item.pk} // Assuming each olive has a unique id
+            imgUrl={item.thumbnail}
+            title={item.name}
+            caption={item.synonyms.join(', ')}
+            onPress={() => {
+              setPrevious(page);
+              setInfoId(item.pk);
+              setPage('infoOlive');
+            }}
+          />
+        );
+      case 'diseaseList':
+        return (
+          <Item
+            key={item.pk} 
+            imgUrl={item.thumbnail}
+            title={item.acronym}
+            onPress={() => {
+              setPrevious(page);
+              setInfoId(item.pk);
+              setPage('infoDisease');
+            }}
+          />
+        );
+      default:
+        return null;
+    }
   }, [page, setPrevious, setPage]);
 
   return (

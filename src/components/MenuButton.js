@@ -28,10 +28,8 @@ const styles = StyleSheet.create({
   },
   image: {
     position: 'absolute',
-    left: 10,
+    left: 20,
   },
 });
-
-
 
 export default MenuButton;

@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { Icon } from '../components/Icon';
+import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
 
-export const Sections = ({ page, setInfo }) => {
+export const Sections = ({ page, setInfo, info }) => {
   const iconsData = [
     { caption: 'Tolerance to Pests and Diseases', img: require('../../assets/BioticsColored.png'), info: 'pest_and_disease' },
     { caption: 'Olive Oil Yield and Quality', img: require('../../assets/OilColored.png'), info: 'olive_yield' },
@@ -21,10 +20,9 @@ export const Sections = ({ page, setInfo }) => {
         <View key={index} style={styles.row}>
           {row.map((item, idx) => (
             <View key={idx} style={styles.iconContainer}>
-              <Icon
-                img={item.img}
-                onPress={() => setInfo(item.info)}
-              />
+              <TouchableOpacity onPress={() => setInfo(item.info)}>
+                <Image source={item.img} style={info === item.info ? { borderWidth: 1, borderColor: '#5F5F2E', borderRadius: 10 } : {borderRadius: 10}} />
+              </TouchableOpacity>
               <Text style={styles.text}>{item.caption}</Text>
             </View>
           ))}
@@ -36,21 +34,21 @@ export const Sections = ({ page, setInfo }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop:'10%',
     width: '100%',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    alignItems: 'center',
     width: '100%',
+    marginTop: '1%',
   },
   iconContainer: {
     alignItems: 'center',
-    width:'25%'
+    width:'30%',
   },
   text: {
-    marginTop: 5,
+    textAlign: 'center',
   },
 });

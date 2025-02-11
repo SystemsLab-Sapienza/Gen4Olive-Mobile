@@ -3,8 +3,8 @@ import { View, StyleSheet, Image } from 'react-native';
 import { MenuButton } from '../components/MenuButton';
 
 const menuItems = [
-  { text: 'Olive', img: require('../../assets/Olive.png'), page: 'oliveList', url: 'https://gen4olive-backend.vercel.app/api/mobile/olivevarieties' },
-  { text: 'Disease', img: require('../../assets/Medicine.png'), page: 'diseaseList', url: 'https://649020861e6aa71680caa7bf.mockapi.io/gen4olive/listolives' },
+  { text: 'Olive Varieties', img: require('../../assets/Olive.png'), page: 'oliveList', url: 'https://gen4olive-backend.vercel.app/api/mobile/olivevarieties' },
+  { text: 'Germplasm Banks', img: require('../../assets/Medicine.png'), page: 'diseaseList', url: 'https://gen4olive-backend.vercel.app/api/mobile/germplasmbankslist' },
   { text: 'Olive Detection', img: require('../../assets/Camera.png'), page: 'oliveDet' },
   { text: 'Disease Detection', img: require('../../assets/Camera.png'), page: 'diseaseDet' }
 ];

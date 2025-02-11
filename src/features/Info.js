@@ -1,30 +1,64 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { View, StyleSheet, TouchableOpacity, Image, Text, ScrollView } from 'react-native';
 import { Sections } from '../components/Sections';
 import { Paragraph } from '../components/Paragraph';
 
-export const Info = ({ setPage, page, previous, setPrevious }) => {
-  const [info, setInfo] = useState('description');
+export const Info = ({ setPage, page, previous, setPrevious, infoId }) => {
+  const [info, setInfo] = useState('pest_and_disease');
   const [api, setApi] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const response = await fetch('https://649020861e6aa71680caa7bf.mockapi.io/gen4olive/olive');
-        const response = await fetch('https://gen4olive-backend.vercel.app/api/mobile/olive?pk=1');
+        var url;
+        switch (page) {
+          case 'infoOlive':
+            url = `https://gen4olive-backend.vercel.app/api/mobile/olive?pk=${infoId}`;
+            break;
+          case 'infoDisease':
+            url = `https://gen4olive-backend.vercel.app/api/mobile/germplasmbank?pk=${infoId}`;
+            break;
+          default:
+            break;
+        }
+        const response = await fetch(url);
         const data = await response.json();
-        setApi(data[0]);
+        setApi(data);
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
-  }, []);
+  }, [page, infoId]);
+
+  const oliveInfo = useMemo(() => {
+    if (api === null) {
+      return null;
+    }
+    return (
+      <>
+        <View style={styles.header}>
+          <View style={styles.nameImg}>
+            <Text style={styles.name}>{api.name}</Text>
+            <View style={styles.location}>
+              <Image source={require('../../assets/Location.png')} />
+              <Text>{' '}</Text>
+              <Text>{api.origin_country}</Text>
+            </View>
+            <Text>{'Synonyms: ' + api.synonyms.join(', ')}</Text>
+            <Text>{'Homonyms: ' + api.homonyms.join(', ')}</Text>
+          </View>
+        </View>
+        <Sections page={page} setInfo={setInfo} info={info} />
+        <Paragraph info={info} api={api} /> 
+      </>
+    );
+  }, [api, info, page, setInfo]);
+
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.containerImg}>
-        <Image source={require('../../assets/OliveImgBig.png')} style={styles.img} />
         <TouchableOpacity
           style={styles.arrow}
           onPress={() => {
@@ -33,21 +67,10 @@ export const Info = ({ setPage, page, previous, setPrevious }) => {
           }}>
           <Image source={require('../../assets/Arrow.png')} />
         </TouchableOpacity>
+        <Image source={require('../../assets/LOGO2.png')} />
       </View>
-      {api && (
-        <View style={styles.header}>
-          <View style={styles.nameImg}>
-            <Text style={styles.name}>{api.name}</Text>
-            <View style={styles.location}>
-              <Image source={require('../../assets/Location.png')} />
-              <Text>{api.country_of_origin}</Text>
-            </View>
-          </View>
-          <Image source={require('../../assets/LOGO2.png')} />
-        </View>
-      )}
-      <Sections page={page} setInfo={setInfo} />
-      {api && <Paragraph info={info} api={api} />}
+      { page === 'infoOlive' ? oliveInfo : null }
+      
     </ScrollView>
   );
 };
@@ -59,22 +82,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   containerImg: {
-    flex: 0.35,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: 'white',
+    marginTop: '5%',
   },
   img: {
     resizeMode: 'cover',
   },
-  arrow: {
-    position: 'absolute',
-    left: '5%',
-    top: '15%',
-  },
   header: {
-    flex: 0.075,
+    flex: 1,
     alignItems: 'center',
-    margin: '5%',
+    marginLeft: '5%',
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
@@ -94,6 +114,5 @@ const styles = StyleSheet.create({
   },
   
 });
-
 
 export default Info;
