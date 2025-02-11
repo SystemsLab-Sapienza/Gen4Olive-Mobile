@@ -21,7 +21,7 @@ export const Sections = ({ page, setInfo, info }) => {
           {row.map((item, idx) => (
             <View key={idx} style={styles.iconContainer}>
               <TouchableOpacity onPress={() => setInfo(item.info)}>
-                <Image source={item.img} style={info === item.info ? { borderWidth: 1, borderColor: '#5F5F2E', borderRadius: 10 } : {borderRadius: 10}} />
+                <Image source={item.img} style={info === item.info ? { borderWidth: 1, borderColor: 'green', borderRadius: 10 } : {borderRadius: 10}} />
               </TouchableOpacity>
               <Text style={styles.text}>{item.caption}</Text>
             </View>
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     alignItems: 'center',
-    width:'30%',
+    width:'25%',
   },
   text: {
     textAlign: 'center',

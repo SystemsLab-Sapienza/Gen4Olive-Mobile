@@ -43,7 +43,7 @@ export const Paragraph = ({ info, api }) => {
           key={i}
           style={[
             styles.button,
-            { backgroundColor: '#5F5F2E' },
+            { backgroundColor: i <= selectedFraction ? 'green' : '#e0e0e0' },
           ]}
         >
         </View>
@@ -55,12 +55,12 @@ export const Paragraph = ({ info, api }) => {
   return (
     <View>
       <Text style={styles.paragraphTitle}>{sectionTitle}</Text>
-      <View>
+      <View style={{ marginLeft: '5%', marginRight: '5%', backgroundColor: '#f6f6f6', padding: 10, borderRadius: 10, borderWidth: 1, borderColor: 'green' }}>
         {sectionData.map(([key, value]) => (
           <View key={key} style={styles.row}>
             <Text style={styles.key}>{key}:</Text>
-            {value.constructor !== Number ?
-              <Text style={styles.value}>{value}</Text> 
+            {value.constructor !== Number || value <= 0 || value > 5 ?
+              <Text style={styles.value}>{value === 0 ? 'N.D.' : value}</Text>
             : 
             <View style={[styles.value, { flexDirection: 'row'}]}>
               {renderButtons(value)}
