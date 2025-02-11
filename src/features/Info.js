@@ -32,7 +32,7 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId }) => {
   }, [page, infoId]);
 
   const oliveInfo = useMemo(() => {
-    if (api === null) {
+    if (api === null || page !== 'infoOlive') {
       return null;
     }
     return (
@@ -55,6 +55,27 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId }) => {
     );
   }, [api, info, page, setInfo]);
 
+  const diseaseInfo = useMemo(() => {
+    if (api === null || page !== 'infoDisease') {
+      return null;
+    }
+    return (
+      <>
+        <View style={styles.header}>
+          <View style={styles.nameImg}>
+            <Text style={styles.name}>{api.acronym}</Text>
+            <View style={styles.location}>
+              <Image source={require('../../assets/Location.png')} />
+              <Text>{' '}</Text>
+              <Text>{api.origin_country}</Text>
+            </View>
+          </View>
+        </View>
+      </>
+    );
+  }, [api, info, page, setInfo]);
+
+  console.log('infoId:', page, infoId);
 
   return (
     <ScrollView style={styles.container}>
@@ -70,6 +91,7 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId }) => {
         <Image source={require('../../assets/LOGO2.png')} />
       </View>
       { page === 'infoOlive' ? oliveInfo : null }
+      { page === 'infoDisease' ? diseaseInfo : null }
       
     </ScrollView>
   );

@@ -55,7 +55,7 @@ export const Paragraph = ({ info, api }) => {
   return (
     <View>
       <Text style={styles.paragraphTitle}>{sectionTitle}</Text>
-      <View style={{ marginLeft: '5%', marginRight: '5%', backgroundColor: '#f6f6f6', padding: 10, borderRadius: 10, borderWidth: 1, borderColor: 'green' }}>
+      <View style={styles.container}>
         {sectionData.map(([key, value]) => (
           <View key={key} style={styles.row}>
             <Text style={styles.key}>{key}:</Text>
@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 5,
+    marginBottom: "1%",
+    marginTop: "1%",
   },
   key: {
     flex: 1,
@@ -101,5 +102,14 @@ const styles = StyleSheet.create({
     height: 10,
     margin: 1,
     borderRadius: 0,
+  },
+  container: {
+    marginLeft: '5%', 
+    marginRight: '5%', 
+    backgroundColor: '#f6f6f6', 
+    padding: 10, 
+    borderRadius: 10, 
+    borderWidth: 1, 
+    borderColor: 'green'
   },
 });
