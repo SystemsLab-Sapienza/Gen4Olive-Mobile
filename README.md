@@ -55,12 +55,17 @@ To keep the project up-to-date, you can follow these steps:
 
 ## Building the App
 
-1. **Expo account Login**:
+1. **Install eas-cli**:
+    ```bash
+    npm install -g eas-cli
+    ```
+
+2. **Expo account Login**:
     ```bash
     eas login
     ```
 
-2. **Create a build**:
+3. **Create a build**:
     - Android Play Store build (AAB)
         ```bash
         eas build --platform android
@@ -70,7 +75,7 @@ To keep the project up-to-date, you can follow these steps:
         eas build --platform android --profile preview
         ```
 
-3. **Download build**:
+4. **Download build**:
     ```bash
     https://expo.dev/
     ```
