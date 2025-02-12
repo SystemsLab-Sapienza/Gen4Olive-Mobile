@@ -92,12 +92,7 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId }) =
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Image source={require('../../assets/LOGO.png')} />
-        <TouchableOpacity
-          onPress={() => {
-            setPage(previous);
-            setPrevious('menu');
-          }}>
+        <View style={styles.containerImg}>
           <TouchableOpacity
             style={styles.arrow}
             onPress={() => {
@@ -106,7 +101,8 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId }) =
             }}>
             <Image source={require('../../assets/Arrow.png')} />
           </TouchableOpacity>
-        </TouchableOpacity>
+          <Image source={require('../../assets/LOGO.png')} />
+        </View>
         <Searchbar
           placeholder="Search"
           onChangeText={setSearchQuery}
@@ -119,11 +115,16 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId }) =
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, margin: '2%' },
+  container: { flex: 1, margin: '3%' },
   header: {
-    marginTop: '6%',
     height: 200,
-    marginBottom: '6%',
+    marginBottom: '5%',
     justifyContent: 'space-around',
   },
+  containerImg: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    margin: '5%',
+  }
 });
