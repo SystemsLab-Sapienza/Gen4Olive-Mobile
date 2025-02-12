@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { Item } from '../components/Item';
 import { Searchbar } from 'react-native-paper';
+import { Icon } from 'react-native-elements';
 
 export const List = ({ setPage, page, previous, setPrevious, url, setInfoId }) => {
   
@@ -99,7 +100,7 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId }) =
               setPage(previous);
               setPrevious('menu');
             }}>
-            <Image source={require('../../assets/Arrow.png')} />
+            <Icon name="arrow-back" color={'white'} style={{ borderWidth: 1, borderColor: 'white', borderRadius: 20 , padding: 5}} />
           </TouchableOpacity>
           <Image source={require('../../assets/LOGO.png')} />
         </View>
