@@ -47,8 +47,8 @@ export default function App() {
     diseaseList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} />,
     oliveDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} />,
     diseaseDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} />,
-    infoOlive: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} />,
-    infoDisease: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} />,
+    infoOlive: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} />,
+    infoDisease: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} />,
   };
 
   return (

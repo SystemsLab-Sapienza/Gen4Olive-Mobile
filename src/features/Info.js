@@ -5,33 +5,52 @@ import { Paragraph } from '../components/Paragraph';
 import { SocialIcon, Icon } from 'react-native-elements'
 import { Linking } from 'react-native';
 
-export const Info = ({ setPage, page, previous, setPrevious, infoId }) => {
+export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId }) => {
   const [info, setInfo] = useState('pest_and_disease');
   const [api, setApi] = useState(null);
+  const [varieties, setVarieties] = useState(null);
+
+  const fetchData = async () => {
+    if (api) {
+      return;
+    }
+    try {
+      var url;
+      switch (page) {
+        case 'infoOlive':
+          url = `https://gen4olive-backend.vercel.app/api/mobile/olive?pk=${infoId}`;
+          break;
+        case 'infoDisease':
+          url = `https://gen4olive-backend.vercel.app/api/mobile/germplasmbank?pk=${infoId}`;
+          break;
+        default:
+          break;
+      }
+      const response = await fetch(url);
+      const data = await response.json();
+      setApi(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchVarieties = async () => {
+    if (page !== 'infoDisease' || varieties) {
+      return;
+    }
+    try {
+      const response = await fetch(`https://gen4olive-backend.vercel.app/api/mobile/olivevarieties`);
+      const data = await response.json();
+      setVarieties(data.olives);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        var url;
-        switch (page) {
-          case 'infoOlive':
-            url = `https://gen4olive-backend.vercel.app/api/mobile/olive?pk=${infoId}`;
-            break;
-          case 'infoDisease':
-            url = `https://gen4olive-backend.vercel.app/api/mobile/germplasmbank?pk=${infoId}`;
-            break;
-          default:
-            break;
-        }
-        const response = await fetch(url);
-        const data = await response.json();
-        setApi(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
     fetchData();
-  }, [page, infoId]);
+    fetchVarieties();
+  }, [page, infoId, setApi, setVarieties]);
 
   const oliveInfo = useMemo(() => {
     if (api === null || page !== 'infoOlive') {
@@ -59,40 +78,61 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId }) => {
     );
   }, [api, info, page, setInfo]);
 
-  console.log(api);
   const diseaseInfo = useMemo(() => {
-    if (api === null || page !== 'infoDisease') {
+    if (api === null || page !== 'infoDisease' || varieties === null) {
       return null;
     }
     return (
-      <View style={styles.header}>
-        <View style={styles.nameImg}>
-          <Text style={styles.name}>{api.name} ({api.acronym})</Text>
-          <Text style={{marginTop : '5%', marginBottom: "5%"}}>{api.description}</Text>
-          <View style={styles.location}>
-            <Icon name='place' color='darkgreen' />
-            <Text>{' '}</Text>
-            <Text>{api.address}, {api.city} ({api.country})</Text>
-          </View>
-          <View style={styles.location}>
-            <Icon name='person' color='darkgreen' />
-            <Text>{' '}</Text>
-            <Text>{api.contact_point}</Text>
-          </View>
-          <Image source={{uri: api.representative_photo_path}} style={{width: '100%', height: 200, marginTop: '5%'}} />
-          <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: '5%'}} >
-            <SocialIcon type='phone' light onPress={() => {Linking.openURL(`tel:${api.contact_point_contact}`)}} />
-            <SocialIcon type='globe' light onPress={() => {Linking.openURL(api.official_website_link)}} />
-            <SocialIcon type='facebook' light onPress={() => {Linking.openURL(api.facebook_link)}} />
-            <SocialIcon type='twitter' light onPress={() => {Linking.openURL(api.twitter_link)}} />
-            <SocialIcon type='linkedin' light onPress={() => {Linking.openURL(api.linkedin_link)}} />
+      <>
+        <View style={styles.header}>
+          <View style={styles.nameImg}>
+            <Text style={styles.name}>{api.name} ({api.acronym})</Text>
+            <Text style={{marginTop : '5%', marginBottom: "5%"}}>{api.description}</Text>
+            <View style={styles.location}>
+              <Icon name='place' color='darkgreen' />
+              <Text>{' '}</Text>
+              <Text>{api.address}, {api.city} ({api.country})</Text>
+            </View>
+            <View style={styles.location}>
+              <Icon name='person' color='darkgreen' />
+              <Text>{' '}</Text>
+              <Text>{api.contact_point}</Text>
+            </View>
+            <View style={styles.location}>
+              <Image source={{uri: api.representative_photo_path}} style={{width: '100%', height: 200, marginTop: '5%'}} />
+            </View>
+            <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: '5%'}} >
+              <SocialIcon type='phone' light onPress={() => {Linking.openURL(`tel:${api.contact_point_contact}`)}} />
+              <SocialIcon type='globe' light onPress={() => {Linking.openURL(api.official_website_link)}} />
+              <SocialIcon type='facebook' light onPress={() => {Linking.openURL(api.facebook_link)}} />
+              <SocialIcon type='twitter' light onPress={() => {Linking.openURL(api.twitter_link)}} />
+              <SocialIcon type='linkedin' light onPress={() => {Linking.openURL(api.linkedin_link)}} />
+            </View>
           </View>
         </View>
+        <View>
+          <Text style={{fontSize: 20, fontWeight: 'bold', color: 'grey', marginLeft: '5%'}}>Varieties</Text>
+          <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around', marginTop: '5%', marginBottom: '5%'}}>
+            {varieties.map((variety, index) => (
+              <TouchableOpacity 
+                key={index} 
+                style={{width: '30%', margin: '2%', backgroundColor: '#f6f6f6', borderRadius: 5, padding: "2%", alignItems: 'center', borderWidth: 1, borderColor: 'darkgreen'}} 
+                onPress={() => {
+                  setPrevious('menu');
+                  setPage('infoOlive');
+                  setInfoId(variety.pk);
+                  setApi(null);
+                  fetchData();
+                }}
+              >
+                <Image source={{uri: variety.thumbnail}} style={{width: '100%', height: 100, borderRadius: 5}} />
+                <Text style={{textAlign: 'center'}}>{variety.name}</Text>
+              </TouchableOpacity>
+            ))}
+        </View>
       </View>
-    );
-  }, [api, info, page, setInfo]);
-
-  console.log('infoId:', page, infoId);
+    </>
+  )}, [api, info, page, setInfo, varieties, setPrevious, setInfoId, setPage]);
 
   return (
     <ScrollView style={styles.container}>
