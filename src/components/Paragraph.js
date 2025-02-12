@@ -53,7 +53,7 @@ export const Paragraph = ({ info, api }) => {
   };
 
   return (
-    <View>
+    <View style={{ marginBottom: '5%' }}>
       <Text style={styles.paragraphTitle}>{sectionTitle}</Text>
       <View style={styles.container}>
         {sectionData.map(([key, value]) => (

@@ -4,6 +4,7 @@ import { Sections } from '../components/Sections';
 import { Paragraph } from '../components/Paragraph';
 import { SocialIcon, Icon } from 'react-native-elements'
 import { Linking } from 'react-native';
+import { Carousel } from '../components/Carousel';
 
 export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId }) => {
   const [info, setInfo] = useState('pest_and_disease');
@@ -72,6 +73,7 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId }
             </View>
           </View>
         </View>
+        <Carousel api={api} />
         <Sections page={page} setInfo={setInfo} info={info} usability={api.usability} />
         <Paragraph info={info} api={api} /> 
       </>
@@ -191,8 +193,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     color: 'grey',
-  },
-  
+  }
 });
 
 export default Info;
