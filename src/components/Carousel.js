@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 export const Carousel = ({ api }) => {
@@ -7,7 +7,7 @@ export const Carousel = ({ api }) => {
     const [currentImage, setCurrentImage] = React.useState(0);
 
     const tabs = () => {
-        if (api.photographed_in === "UO") {
+        if (api.photographed_in === "UCO") {
             return [
                 'tree_photos',
                 'branch_photos',
