@@ -53,7 +53,7 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId }) => {
             </View>
           </View>
         </View>
-        <Sections page={page} setInfo={setInfo} info={info} />
+        <Sections page={page} setInfo={setInfo} info={info} usability={api.usability} />
         <Paragraph info={info} api={api} /> 
       </>
     );

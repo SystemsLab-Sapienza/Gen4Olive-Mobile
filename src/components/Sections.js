@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
 
-export const Sections = ({ page, setInfo, info }) => {
+export const Sections = ({ page, setInfo, info, usability }) => {
   const iconsData = [
     { caption: 'Tolerance to Pests and Diseases', img: require('../../assets/BioticsColored.png'), info: 'pest_and_disease' },
     { caption: 'Olive Oil Yield and Quality', img: require('../../assets/OilColored.png'), info: 'olive_yield' },
@@ -13,6 +13,13 @@ export const Sections = ({ page, setInfo, info }) => {
 
   // Split icons into two arrays, each representing a row
   const iconsRows = [iconsData.slice(0, 3), iconsData.slice(3)];
+  
+  const hedgeCase = (usability, key) => {
+    if (usability === 'Oil Olives' && key === 'olive_fruit_aptitude') {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <View style={styles.container}>
@@ -20,7 +27,7 @@ export const Sections = ({ page, setInfo, info }) => {
         <View key={index} style={styles.row}>
           {row.map((item, idx) => (
             <View key={idx} style={styles.iconContainer}>
-              <TouchableOpacity onPress={() => setInfo(item.info)}>
+              <TouchableOpacity onPress={() => setInfo(item.info)} disabled={hedgeCase(usability, item.info)} style={{opacity: hedgeCase(usability, item.info) ? 0.5 : 1}}>
                 <Image source={item.img} style={info === item.info ? { borderWidth: 1, borderColor: 'green', borderRadius: 10 } : {borderRadius: 10}} />
               </TouchableOpacity>
               <Text style={styles.text}>{item.caption}</Text>
