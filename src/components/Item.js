@@ -1,14 +1,11 @@
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity, Image, View } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, View, Image } from 'react-native';
 
 export const Item = ({ imgUrl, title, caption, onPress }) => {
-
   return (
     <TouchableOpacity style={styles.item} onPress={onPress}>
       <View style={styles.container}>
-        <View style={styles.cardImg}>
-          <Image source={{ uri: imgUrl }} style={styles.img} />
-        </View>
+        <Image source={{uri: imgUrl}} style={[{width: 50, height: 50}, styles.img]} />
         <View style={styles.cardText}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.caption}>{caption}</Text>
@@ -28,14 +25,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    marginTop: '2%',
-  },
-  cardImg: {
-    marginLeft: '5%',
-    marginRight: '5%',
-  },
+    alignItems: 'center',},
   img: {
     borderRadius: 10,
+    margin: '2%',
   },
   cardText: {
     flex: 1,

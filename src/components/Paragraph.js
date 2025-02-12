@@ -77,8 +77,7 @@ const styles = StyleSheet.create({
   paragraphTitle: {
     fontSize: 25,
     textAlign: 'center',
-    marginTop: '5%',
-    marginBottom: '5%',
+    margin: '5%',
     fontWeight: 'bold',
     color: '#a87c04',
   },

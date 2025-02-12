@@ -2,6 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { View, StyleSheet, TouchableOpacity, Image, Text, ScrollView } from 'react-native';
 import { Sections } from '../components/Sections';
 import { Paragraph } from '../components/Paragraph';
+import { SocialIcon, Icon } from 'react-native-elements'
+import { Linking } from 'react-native';
 
 export const Info = ({ setPage, page, previous, setPrevious, infoId }) => {
   const [info, setInfo] = useState('pest_and_disease');
@@ -40,13 +42,15 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId }) => {
         <View style={styles.header}>
           <View style={styles.nameImg}>
             <Text style={styles.name}>{api.name}</Text>
+            <View style={{marginTop : '5%', marginBottom: "5%"}}>
+              <Text>{'Synonyms: ' + api.synonyms.join(', ')}</Text>
+              <Text>{'Homonyms: ' + api.homonyms.join(', ')}</Text>
+            </View>
             <View style={styles.location}>
-              <Image source={require('../../assets/Location.png')} />
+              <Icon name='place' color='darkgreen' />
               <Text>{' '}</Text>
               <Text>{api.origin_country}</Text>
             </View>
-            <Text>{'Synonyms: ' + api.synonyms.join(', ')}</Text>
-            <Text>{'Homonyms: ' + api.homonyms.join(', ')}</Text>
           </View>
         </View>
         <Sections page={page} setInfo={setInfo} info={info} />
@@ -55,23 +59,36 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId }) => {
     );
   }, [api, info, page, setInfo]);
 
+  console.log(api);
   const diseaseInfo = useMemo(() => {
     if (api === null || page !== 'infoDisease') {
       return null;
     }
     return (
-      <>
-        <View style={styles.header}>
-          <View style={styles.nameImg}>
-            <Text style={styles.name}>{api.acronym}</Text>
-            <View style={styles.location}>
-              <Image source={require('../../assets/Location.png')} />
-              <Text>{' '}</Text>
-              <Text>{api.origin_country}</Text>
-            </View>
+      <View style={styles.header}>
+        <View style={styles.nameImg}>
+          <Text style={styles.name}>{api.name} ({api.acronym})</Text>
+          <Text style={{marginTop : '5%', marginBottom: "5%"}}>{api.description}</Text>
+          <View style={styles.location}>
+            <Icon name='place' color='darkgreen' />
+            <Text>{' '}</Text>
+            <Text>{api.address}, {api.city} ({api.country})</Text>
+          </View>
+          <View style={styles.location}>
+            <Icon name='person' color='darkgreen' />
+            <Text>{' '}</Text>
+            <Text>{api.contact_point}</Text>
+          </View>
+          <Image source={{uri: api.representative_photo_path}} style={{width: '100%', height: 200, marginTop: '5%'}} />
+          <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: '5%'}} >
+            <SocialIcon type='phone' light onPress={() => {Linking.openURL(`tel:${api.contact_point_contact}`)}} />
+            <SocialIcon type='globe' light onPress={() => {Linking.openURL(api.official_website_link)}} />
+            <SocialIcon type='facebook' light onPress={() => {Linking.openURL(api.facebook_link)}} />
+            <SocialIcon type='twitter' light onPress={() => {Linking.openURL(api.twitter_link)}} />
+            <SocialIcon type='linkedin' light onPress={() => {Linking.openURL(api.linkedin_link)}} />
           </View>
         </View>
-      </>
+      </View>
     );
   }, [api, info, page, setInfo]);
 
@@ -108,7 +125,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: 'white',
-    marginTop: '5%',
+    marginTop: '10%',
+    marginRight: '5%',
+    marginLeft: '5%',
   },
   img: {
     resizeMode: 'cover',
@@ -127,7 +146,6 @@ const styles = StyleSheet.create({
   },
   location: {
     flexDirection: 'row',
-    marginTop:'5%'
   },
   name: {
     fontSize: 25,
