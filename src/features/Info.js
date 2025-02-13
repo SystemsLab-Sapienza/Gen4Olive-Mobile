@@ -5,9 +5,8 @@ import { Paragraph } from '../components/Paragraph';
 import { SocialIcon, Icon } from 'react-native-elements'
 import { Linking } from 'react-native';
 import { Carousel } from '../components/Carousel';
-import { endpoints } from '../api';
 
-export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId }) => {
+export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, endpoints }) => {
   const [info, setInfo] = useState('pest_and_disease');
   const [api, setApi] = useState(null);
   const [varieties, setVarieties] = useState(null);

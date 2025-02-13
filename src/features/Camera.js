@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
-import { endpoints } from '../api';
 
-export const Picture = ({ previous, setPage, setPrevious, page, setPrediction }) => {
+export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, endpoints }) => {
   const [permission, requestCameraPermission] = useCameraPermissions();
   const [data, setData] = useState(null);
   useEffect(() => {

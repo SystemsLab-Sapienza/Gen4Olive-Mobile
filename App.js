@@ -13,6 +13,25 @@ import i18n from './src/i18n';
 
 export default function App() {
 
+  const endpoints = {
+    olive: 'https://gen4olive-backend.vercel.app/api/mobile/olive?pk=',
+    bank: 'https://gen4olive-backend.vercel.app/api/mobile/germplasmbank?pk=',
+    olives: 'https://gen4olive-backend.vercel.app/api/mobile/olivevarieties',
+    banks: 'https://gen4olive-backend.vercel.app/api/mobile/germplasmbankslist',
+    predictOlive: 'https://gen4olive-backend.vercel.app/api/mobile/predictvariety',
+    predictDisease: 'https://gen4olive-backend.vercel.app/api/mobile/predictdisease',
+  };
+
+  // const endpoints = {
+  //   olive: 'http://10.181.120.71:8000/mobile/olivevarieties/',
+  //   bank: 'http://10.181.120.71:8000/mobile/germplasmbanks/',
+  //   olives: 'http://10.181.120.71:8000/mobile/olivevarieties',
+  //   banks: 'http://10.181.120.71:8000/mobile/germplasmbankslist',
+  //   predictOlive: 'http://10.181.120.71:8000/mobile/predictvariety',
+  //   predictDisease: 'http://10.181.120.71:8000/mobile/predictdisease',
+  // };
+
+
   // i18n
   const { t } = useTranslation();
   const locales = useLocales();
@@ -44,15 +63,15 @@ export default function App() {
 
   // Map page state to corresponding component
   const pageComponents = {
-    menu: <Menu setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} />,
-    oliveList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} />,
-    diseaseList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} />,
-    oliveDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} setPrediction={setPredict} />,
-    diseaseDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} setPrediction={setPredict} />,
-    infoOlive: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} />,
-    infoDisease: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} />,
-    olivePredict: <Predict setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} predict={predict} />,
-    diseasePredict: <Predict setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} predict={predict} />,
+    menu: <Menu setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} endpoints={endpoints} />,
+    oliveList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} endpoints={endpoints} />,
+    diseaseList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} endpoints={endpoints} />,
+    oliveDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} setPrediction={setPredict} endpoints={endpoints} />,
+    diseaseDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} setPrediction={setPredict} endpoints={endpoints} />,
+    infoOlive: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} endpoints={endpoints} />,
+    infoDisease: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} endpoints={endpoints} />,
+    olivePredict: <Predict setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} predict={predict} endpoints={endpoints} />,
+    diseasePredict: <Predict setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} predict={predict} endpoints={endpoints} />,
   };
 
   return (
