@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Pressable } from 'react-native';
+import { Icon } from 'react-native-elements';
+import Tooltip from "react-native-tooltip-2";
 
 export const Paragraph = ({ info, api }) => {
   let sectionTitle = '';
@@ -35,6 +37,13 @@ export const Paragraph = ({ info, api }) => {
       break;
   }
 
+  const [toolTipVisible, setToolTipVisible] = React.useState(
+    sectionData.reduce((acc, [key, value]) => {
+      acc[key] = false;
+      return acc;
+    }, {})
+  );
+
   const renderButtons = (selectedFraction) => {
     const buttons = [];
     for (let i = 1; i <= 5; i++) {
@@ -53,12 +62,27 @@ export const Paragraph = ({ info, api }) => {
   };
 
   return (
-    <View style={{ marginBottom: '5%' }}>
+    <View style={{ marginBottom: '5%'}}>
       <Text style={styles.paragraphTitle}>{sectionTitle}</Text>
       <View style={styles.container}>
         {sectionData.map(([key, value]) => (
-          <View key={key} style={styles.row}>
-            <Text style={styles.key}>{key}:</Text>
+          <View key={key} style={{ flexDirection: 'row', marginBottom: 3, marginTop: 3, alignItems: 'center'}}>
+            <Tooltip
+                isVisible={toolTipVisible[key]}
+                content={
+                  <View>
+                    <Text>{key}</Text>
+                  </View>
+                }
+                placement={'top'}
+                onClose={() => setToolTipVisible({ ...toolTipVisible, [key]: false })} 
+            >
+                <Pressable onPress={() => setToolTipVisible({ ...toolTipVisible, [key]: true })} >
+                    <Icon name='info' color='green' size={25} style={{marginTop: 5}} />
+                </Pressable>
+            </Tooltip>
+          
+            <Text style={styles.key}>{key}</Text>
             {value.constructor !== Number || value <= 0 || value > 5 ?
               <Text style={styles.value}>{value === 0 ? 'N.D.' : value}</Text>
             : 
@@ -81,12 +105,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#a87c04',
   },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: "1%",
-    marginTop: "1%",
-  },
+ 
   key: {
     flex: 1,
     fontWeight: 'bold',
@@ -109,6 +128,6 @@ const styles = StyleSheet.create({
     padding: 10, 
     borderRadius: 10, 
     borderWidth: 1, 
-    borderColor: 'green'
+    borderColor: 'green',
   },
 });

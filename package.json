@@ -44,7 +44,8 @@
     "react-native": "0.76.7",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "~2.20.2",
-    "react-native-paper": "^5.13.1"
+    "react-native-paper": "^5.13.1",
+    "react-native-tooltip-2": "^0.1.3"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

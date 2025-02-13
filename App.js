@@ -4,6 +4,7 @@ import { Menu } from './src/features/Menu';
 import { List } from './src/features/List';
 import { Picture } from './src/features/Camera';
 import { Info } from './src/features/Info';
+import { Predict } from './src/features/Predict';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import ExitConfirmation from './src/components/ExitConfirmation';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +26,7 @@ export default function App() {
   const [url, setUrl] = useState('');
   const [orientation, setOrientation] = useState(1);
   const [infoId, setInfoId] = useState(null);
+  const [predict, setPredict] = useState(null);
 
   // Lock orientation to PORTRAIT
   const lockOrientation = async () => {
@@ -45,10 +47,12 @@ export default function App() {
     menu: <Menu setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} />,
     oliveList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} />,
     diseaseList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} />,
-    oliveDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} />,
-    diseaseDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} />,
+    oliveDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} setPrediction={setPredict} />,
+    diseaseDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} setPrediction={setPredict} />,
     infoOlive: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} />,
     infoDisease: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} />,
+    olivePredict: <Predict setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} predict={predict} />,
+    diseasePredict: <Predict setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} predict={predict} />,
   };
 
   return (
