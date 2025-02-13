@@ -140,7 +140,6 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
     <ScrollView style={styles.container}>
       <View style={styles.containerImg}>
         <TouchableOpacity
-          style={styles.arrow}
           onPress={() => {
             setPage(previous);
             setPrevious('menu');
@@ -170,9 +169,6 @@ const styles = StyleSheet.create({
     marginTop: '10%',
     marginRight: '5%',
     marginLeft: '5%',
-  },
-  img: {
-    resizeMode: 'cover',
   },
   header: {
     flex: 1,

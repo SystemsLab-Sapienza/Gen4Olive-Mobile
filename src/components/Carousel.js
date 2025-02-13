@@ -7,7 +7,7 @@ export const Carousel = ({ api }) => {
     const [currentImage, setCurrentImage] = React.useState(0);
 
     const tabs = () => {
-        if (api.photographed_in === "UCO") {
+        if (api.photographed_in === "WOGB-UCO") {
             return [
                 'tree_photos',
                 'branch_photos',

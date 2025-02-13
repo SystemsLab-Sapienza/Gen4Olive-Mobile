@@ -52,7 +52,7 @@ export const Paragraph = ({ info, api }) => {
           key={i}
           style={[
             styles.button,
-            { backgroundColor: i <= selectedFraction ? 'green' : '#e0e0e0' },
+            { backgroundColor: i <= selectedFraction ? 'darkgreen' : '#e0e0e0' },
           ]}
         >
         </View>
@@ -78,7 +78,7 @@ export const Paragraph = ({ info, api }) => {
                 onClose={() => setToolTipVisible({ ...toolTipVisible, [key]: false })} 
             >
                 <Pressable onPress={() => setToolTipVisible({ ...toolTipVisible, [key]: true })} >
-                    <Icon name='info' color='green' size={25} style={{marginTop: 5}} />
+                    <Icon name='info' color='darkgreen' size={25} style={{marginTop: 5}} />
                 </Pressable>
             </Tooltip>
           
@@ -128,6 +128,6 @@ const styles = StyleSheet.create({
     padding: 10, 
     borderRadius: 10, 
     borderWidth: 1, 
-    borderColor: 'green',
+    borderColor: 'darkgreen',
   },
 });
