@@ -4,11 +4,8 @@ import { Icon } from 'react-native-elements';
 
 export const Predict = ({ setPage, page, previous, setPrevious, predict }) => {
     console.log('Prediction:', predict);
-    if (!predict) {
-        return null;
-    }
     if (page === 'olivePredict') {
-        return (
+        return predict ? (
             <View style={{ flex: 1 }}>
                 <TouchableOpacity
                     style={{ position: 'absolute', top: 50, left: 20 }}
@@ -29,10 +26,10 @@ export const Predict = ({ setPage, page, previous, setPrevious, predict }) => {
                     }
                 </View>
         </View>
-        );
+        ) : null;
     }
     if (page === 'diseasePredict') {
-        return (
+        return predict ? (
             <View style={{ flex: 1 }}>
                 <TouchableOpacity
                     style={{ position: 'absolute', top: 50, left: 20 }}
@@ -53,7 +50,7 @@ export const Predict = ({ setPage, page, previous, setPrevious, predict }) => {
                     }
             </View>
         </View>
-        );
+        ) : null;
     }
     return null;
 };

@@ -5,6 +5,7 @@ import { Paragraph } from '../components/Paragraph';
 import { SocialIcon, Icon } from 'react-native-elements'
 import { Linking } from 'react-native';
 import { Carousel } from '../components/Carousel';
+import { endpoints } from '../api';
 
 export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId }) => {
   const [info, setInfo] = useState('pest_and_disease');
@@ -19,10 +20,10 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId }
       var url;
       switch (page) {
         case 'infoOlive':
-          url = `https://gen4olive-backend.vercel.app/api/mobile/olive?pk=${infoId}`;
+          url = endpoints.olive + infoId;
           break;
         case 'infoDisease':
-          url = `https://gen4olive-backend.vercel.app/api/mobile/germplasmbank?pk=${infoId}`;
+          url = endpoints.bank + infoId;
           break;
         default:
           break;
@@ -40,7 +41,7 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId }
       return;
     }
     try {
-      const response = await fetch(`https://gen4olive-backend.vercel.app/api/mobile/olivevarieties`);
+      const response = await fetch(endpoints.olives);
       const data = await response.json();
       setVarieties(data.olives);
     } catch (error) {

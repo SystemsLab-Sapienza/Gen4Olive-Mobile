@@ -1,12 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
+import { endpoints } from '../api';
 
 export const Picture = ({ previous, setPage, setPrevious, page, setPrediction }) => {
   const [permission, requestCameraPermission] = useCameraPermissions();
+  const [data, setData] = useState(null);
   useEffect(() => {
     requestCameraPermission();
-  }, []);
+    if (data){
+      console.log(data)
+      switch (page) {
+        case 'oliveDet':
+          setPrevious(page);
+          setPrediction(data['olives']);
+          setPage('olivePredict');
+          break;
+        case 'diseaseDet':
+          setPrevious(page);
+          setPrediction(data['diseases']);
+          setPage('diseasePredict');
+          break;
+        default:
+          break;
+      }
+    }
+  }, [data]);
 
   const [image, setImage] = useState(null);
   const cameraRef = useRef(null);
@@ -25,98 +44,40 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction })
 
   const savePicture = async () => {
     if (image) {
-      // // call post request to server passing image
-      // console.log('Predicting...');
-      // const url = 'https://gen4olive.vercel.app/api/mobile/predictdisease';
-      // try {
-      //   // Create a FormData object
-      //   const formData = new FormData();
-      //   // Append the image file to the FormData object
-      //   formData.append('image', {
-      //       uri: image,
-      //       name: 'photo.jpg', // You can change the name as needed
-      //       type: 'image/jpg', // You can change the type as needed
-      //   });
+      // call post request to server passing image
+      console.log('Predicting...');
+      var url;
+      if (page==='diseaseDet'){
+        url = endpoints.predictDisease;
+      }
+      else if (page==='oliveDet'){
+        url = endpoints.predictOlive;
+      }
+      try {
+        // Create a FormData object
+        const formData = new FormData();
+        // Append the image file to the FormData object
+        formData.append('image', {
+            uri: image,
+            name: 'photo.jpg', // You can change the name as needed
+            type: 'image/jpg', // You can change the type as needed
+        });
 
-      //   // Make the POST request
-      //   const response = await fetch(url, {
-      //       method: 'POST',
-      //       body: formData,
-      //   });
-      //   console.log('Response:', response);
-      //   // Handle the response
-      //   if (!response.ok) {
-      //       throw new Error('Network response was not ok');
-      //   }
-
-      //   const data = await response.json();
-      //   console.log('Prediction result:', data);
-      // } catch (error) {
-      //   console.error('Error saving picture:', error);
-      // }
-
-
-      const disease = [
-        {
-            "pk": 1,
-            "disease_name": "Verticillium",
-            "confidence_score": 0.9,
-            "thumbnail": "https://gen4olive-backend.vercel.app/thumbnail.png",
-            "description": "long text to display on an icon click"
-        },
-        {
-            "pk": 2,
-            "disease_name": "Xyllela",
-            "confidence_score": 0.05,
-            "thumbnail": "https://gen4olive-backend.vercel.app/thumbnail.png",
-            "description": "long text to display on an icon click"
-        },
-        {
-            "pk": 5,
-            "disease_name": "Olive random name",
-            "confidence_score": 0.05,
-            "thumbnail": "https://gen4olive-backend.vercel.app/thumbnail.png",
-            "description": "long text to display on an icon click"
+        // Make the POST request
+        const response = await fetch(url, {
+            method: 'POST',
+            body: formData,
+        });
+        console.log('Response:', response);
+        // Handle the response
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-      ];
 
-      const olives = [
-        {
-            "pk": 1,
-            "id": "01",
-            "name": "Pendolino",
-            "confidence_score": 0.9,
-            "thumbnail": "https://gen4olive-backend.vercel.app/thumbnail.png"
-        },
-        {
-            "pk": 2,
-            "id": "02",
-            "name": "Frantoio",
-            "confidence_score": 0.05,
-            "thumbnail": "https://gen4olive-backend.vercel.app/thumbnail.png"
-        },
-        {
-            "pk": 2,
-            "id": "02",
-            "name": "Frantoio",
-            "confidence_score": 0.05,
-            "thumbnail": "https://gen4olive-backend.vercel.app/thumbnail.png"
-        }
-      ];
-
-      switch (page) {
-        case 'oliveDet':
-          setPrevious(page);
-          setPrediction(olives);
-          setPage('olivePredict');
-          break;
-        case 'diseaseDet':
-          setPrevious(page);
-          setPrediction(disease);
-          setPage('diseasePredict');
-          break;
-        default:
-          break;
+        const d = await response.json();
+        setData(d);
+      } catch (error) {
+        console.error('Error saving picture:', error);
       }
     }
   };

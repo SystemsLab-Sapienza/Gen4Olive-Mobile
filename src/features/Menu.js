@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { MenuButton } from '../components/MenuButton';
+import { endpoints } from '../api';
 
 const menuItems = [
-  { text: 'Olive Varieties', img: require('../../assets/Olive.png'), page: 'oliveList', url: 'https://gen4olive-backend.vercel.app/api/mobile/olivevarieties' },
-  { text: 'Germplasm Banks', img: require('../../assets/Medicine.png'), page: 'diseaseList', url: 'https://gen4olive-backend.vercel.app/api/mobile/germplasmbankslist' },
+  { text: 'Olive Varieties', img: require('../../assets/Olive.png'), page: 'oliveList', url: endpoints.olives },
+  { text: 'Germplasm Banks', img: require('../../assets/Medicine.png'), page: 'diseaseList', url: endpoints.banks },
   { text: 'Olive Detection', img: require('../../assets/Camera.png'), page: 'oliveDet' },
   { text: 'Disease Detection', img: require('../../assets/Camera.png'), page: 'diseaseDet' }
 ];
