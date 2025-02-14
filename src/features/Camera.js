@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
-import { use } from 'react';
+import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 
 export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, endpoints }) => {
   
@@ -53,37 +53,90 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, e
     }
   };
 
+//   const savePicture = useCallback(async () => {
+//   if (image) {
+//     console.log('Predicting...');
+//     setIsLoading(true);
+//     var url;
+//     if (page === 'diseaseDet') {
+//       url = endpoints.predictDisease;
+//     } else if (page === 'oliveDet') {
+//       url = endpoints.predictOlive;
+//     }
+
+//     try {
+//       // Resize the image to ensure it is under 1 MB
+//       const manipResult = await manipulateAsync(
+//         image,
+//         [{ resize: { width: 800 } }], // Adjust width as needed
+//         { compress: 0.8, format: SaveFormat.JPEG } // Adjust compression
+//       );
+
+//       // Create a FormData object
+//       const formData = new FormData();
+//       // Append the resized image file to the FormData object
+//       formData.append('image', {
+//         uri: manipResult.uri,
+//         name: 'photo.jpg', // You can change the name as needed
+//         type: 'image/jpg', // You can change the type as needed
+//       });
+
+//       // Make the POST request
+//       const response = await fetch(url, {
+//         method: 'POST',
+//         body: formData,
+//       });
+//       console.log('Response:', response);
+//       // Handle the response
+//       if (!response.ok) {
+//         throw new Error('Network response was not ok');
+//       }
+//       const d = await response.json();
+//       setData(d);
+//     } catch (error) {
+//       console.error('Error saving picture:', error);
+//     }
+//     setIsLoading(false);
+//   }
+// }, [image, setData, setIsLoading, endpoints, page]);
+
   const savePicture = useCallback(async () => {
     if (image) {
-      // call post request to server passing image
       console.log('Predicting...');
       setIsLoading(true);
       var url;
-      if (page==='diseaseDet'){
+      if (page === 'diseaseDet') {
         url = endpoints.predictDisease;
-      }
-      else if (page==='oliveDet'){
+      } else if (page === 'oliveDet') {
         url = endpoints.predictOlive;
       }
+
       try {
+        // Resize the image to ensure it is under 1 MB
+        const manipResult = await manipulateAsync(
+          image,
+          [{ resize: { width: 800 } }], // Adjust width as needed
+          { compress: 0.8, format: SaveFormat.JPEG } // Adjust compression
+        );
+
         // Create a FormData object
         const formData = new FormData();
-        // Append the image file to the FormData object
+        // Append the resized image file to the FormData object
         formData.append('image', {
-            uri: image,
-            name: 'photo.jpg', // You can change the name as needed
-            type: 'image/jpg', // You can change the type as needed
+          uri: manipResult.uri,
+          name: 'photo.jpg', // You can change the name as needed
+          type: 'image/jpg', // You can change the type as needed
         });
 
         // Make the POST request
         const response = await fetch(url, {
-            method: 'POST',
-            body: formData,
+          method: 'POST',
+          body: formData,
         });
         console.log('Response:', response);
         // Handle the response
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+          throw new Error('Network response was not ok');
         }
         const d = await response.json();
         setData(d);
