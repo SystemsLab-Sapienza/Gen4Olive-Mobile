@@ -15,7 +15,7 @@ export const Predict = ({ setPage, page, previous, setPrevious, predict }) => {
                         ) : (
                             <Text style={styles.title}>{item.disease_name}</Text>
                         )}
-                        <Text style={styles.confidenceScore}>{item.confidence_score}</Text>
+                        <Text style={styles.confidenceScore}>{Number(item.confidence_score)*100}% Confidence</Text>
                     </View>
                 </View>
             </View>
@@ -42,7 +42,7 @@ export const Predict = ({ setPage, page, previous, setPrevious, predict }) => {
                     </View>
                 </View>
                 <View style={styles.predictionContainer}>
-                    {predict.length > 0 ? DinamicPredict : <Text style={styles.noPredictions}>No predictions available.</Text>}
+                    {predict.length > 0 ? DinamicPredict : <Text style={styles.noPredictions}>No detection available.</Text>}
                 </View>
             </View>
         );

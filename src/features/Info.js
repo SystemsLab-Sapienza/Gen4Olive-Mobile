@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { View, StyleSheet, TouchableOpacity, Image, Text, ScrollView } from 'react-native';
 import { Sections } from '../components/Sections';
 import { Paragraph } from '../components/Paragraph';
-import { SocialIcon, Icon } from 'react-native-elements'
+import { SocialIcon, Icon } from 'react-native-elements';
 import { Linking } from 'react-native';
 import { Carousel } from '../components/Carousel';
 
@@ -62,7 +62,7 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
         <View style={styles.header}>
           <View style={styles.nameImg}>
             <Text style={styles.name}>{api.name}</Text>
-            <View style={{marginTop : '5%', marginBottom: "5%"}}>
+            <View style={{ marginTop: '5%', marginBottom: "5%" }}>
               <Text>{'Synonyms: ' + api.synonyms.join(', ')}</Text>
               <Text>{'Homonyms: ' + api.homonyms.join(', ')}</Text>
             </View>
@@ -75,7 +75,7 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
         </View>
         <Carousel api={api} />
         <Sections page={page} setInfo={setInfo} info={info} usability={api.usability} />
-        <Paragraph info={info} api={api} /> 
+        <Paragraph info={info} api={api} />
       </>
     );
   }, [api, info, page, setInfo]);
@@ -89,7 +89,7 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
         <View style={styles.header}>
           <View style={styles.nameImg}>
             <Text style={styles.name}>{api.name} ({api.acronym})</Text>
-            <Text style={{marginTop : '5%', marginBottom: "5%"}}>{api.description}</Text>
+            <Text style={{ marginTop: '5%', marginBottom: "5%" }}>{api.description}</Text>
             <View style={styles.location}>
               <Icon name='place' color='darkgreen' />
               <Text>{' '}</Text>
@@ -101,40 +101,41 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
               <Text>{api.contact_point}</Text>
             </View>
             <View style={styles.location}>
-              <Image source={{uri: api.representative_photo_path}} style={{width: '100%', height: 200, marginTop: '5%'}} />
+              <Image source={{ uri: api.representative_photo_path }} style={{ width: '100%', height: 200, marginTop: '5%' }} />
             </View>
-            <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: '5%'}} >
-              <SocialIcon type='phone' light onPress={() => {Linking.openURL(`tel:${api.contact_point_contact}`)}} />
-              <SocialIcon type='globe' light onPress={() => {Linking.openURL(api.official_website_link)}} />
-              <SocialIcon type='facebook' light onPress={() => {Linking.openURL(api.facebook_link)}} />
-              <SocialIcon type='twitter' light onPress={() => {Linking.openURL(api.twitter_link)}} />
-              <SocialIcon type='linkedin' light onPress={() => {Linking.openURL(api.linkedin_link)}} />
+            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: '5%' }} >
+              <SocialIcon type='phone' light onPress={() => { Linking.openURL(`tel:${api.contact_point_contact}`) }} />
+              <SocialIcon type='globe' light onPress={() => { Linking.openURL(api.official_website_link) }} />
+              <SocialIcon type='facebook' light onPress={() => { Linking.openURL(api.facebook_link) }} />
+              <SocialIcon type='twitter' light onPress={() => { Linking.openURL(api.twitter_link) }} />
+              <SocialIcon type='linkedin' light onPress={() => { Linking.openURL(api.linkedin_link) }} />
             </View>
           </View>
         </View>
         <View>
-          <Text style={{fontSize: 20, fontWeight: 'bold', color: 'grey', marginLeft: '5%'}}>Varieties</Text>
-          <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around', marginTop: '5%', marginBottom: '5%'}}>
+          <Text style={styles.varietiesTitle}>Varieties</Text>
+          <View style={styles.containerVarieties}>
             {varieties.map((variety, index) => (
               <TouchableOpacity 
-                key={index} 
-                style={{width: '30%', margin: '2%', backgroundColor: '#f6f6f6', borderRadius: 5, padding: "2%", alignItems: 'center', borderWidth: 1, borderColor: 'darkgreen'}} 
-                onPress={() => {
-                  setPrevious('menu');
-                  setPage('infoOlive');
-                  setInfoId(variety.pk);
-                  setApi(null);
-                  fetchData();
-                }}
+                  key={index} 
+                  style={styles.touchableOpacity} 
+                  onPress={() => {
+                      setPrevious('menu');
+                      setPage('infoOlive');
+                      setInfoId(variety.pk);
+                      setApi(null);
+                      fetchData();
+                  }}
               >
-                <Image source={{uri: variety.thumbnail}} style={{width: '100%', height: 100, borderRadius: 5}} />
-                <Text style={{textAlign: 'center'}}>{variety.name}</Text>
+                  <Image source={{ uri: variety.thumbnail }} style={styles.image} />
+                  <Text style={styles.text}>{variety.name}</Text>
               </TouchableOpacity>
             ))}
+          </View>
         </View>
-      </View>
-    </>
-  )}, [api, info, page, setInfo, varieties, setPrevious, setInfoId, setPage]);
+      </>
+    );
+  }, [api, info, page, setInfo, varieties, setPrevious, setInfoId, setPage]);
 
   return (
     <ScrollView style={styles.container}>
@@ -148,9 +149,8 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
         </TouchableOpacity>
         <Image source={require('../../assets/LOGO2.png')} />
       </View>
-      { page === 'infoOlive' ? oliveInfo : null }
-      { page === 'infoDisease' ? diseaseInfo : null }
-      
+      {page === 'infoOlive' ? oliveInfo : null}
+      {page === 'infoDisease' ? diseaseInfo : null}
     </ScrollView>
   );
 };
@@ -189,7 +189,46 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     color: 'grey',
-  }
+  },
+  varietiesTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'grey',
+    marginLeft: '5%',
+    marginTop: '5%',
+  },
+  containerVarieties: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    marginTop: '5%',
+    marginBottom: '5%',
+  },
+  touchableOpacity: {
+    width: '30%',
+    margin: '2%',
+    backgroundColor: '#f6f6f6',
+    borderRadius: 10, // Match the border radius from DinamicPredict
+    padding: '2%',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'darkgreen',
+    elevation: 2, // Add shadow for Android
+    shadowColor: '#000', // Shadow for iOS
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+  },
+  image: {
+    width: '100%',
+    height: 100,
+    borderRadius: 10, // Match the border radius from DinamicPredict
+  },
+  text: {
+    textAlign: 'center',
+    fontWeight: 'bold', // Optional: make the text bold for better readability
+    color: '#333', // Optional: darker text for better readability
+  },
 });
 
 export default Info;
