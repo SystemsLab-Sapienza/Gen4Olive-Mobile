@@ -38,7 +38,15 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.cicciobello.snack42cab0cb946d40019706827cfac593fc"
+      "package": "com.cicciobello.snack42cab0cb946d40019706827cfac593fc",
+      "networkSecurityConfig": {
+        "domain-config": [
+          {
+            "domain": "*",
+            "cleartextTrafficPermitted": true
+          }
+        ]
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
