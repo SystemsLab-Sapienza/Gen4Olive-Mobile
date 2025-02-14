@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
+import * as ImagePicker from 'expo-image-picker'; // Importa ImagePicker
 
 export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, endpoints }) => {
   
@@ -9,6 +10,8 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, e
   const [data, setData] = useState(null);
   const [permissionGranted, setPermissionGranted] = useState(false);
   const [ilLoading, setIsLoading] = useState(false);
+  const [image, setImage] = useState(null);
+  const cameraRef = useRef(null);
 
   useEffect(() => {
     const checkPermissions = async () => {
@@ -38,9 +41,6 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, e
     }
   }, [data, page, setPage, setPrediction, setPrevious]);
 
-  const [image, setImage] = useState(null);
-  const cameraRef = useRef(null);
-
   const takePicture = async () => {
     if (cameraRef.current) {
       try {
@@ -53,52 +53,25 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, e
     }
   };
 
-//   const savePicture = useCallback(async () => {
-//   if (image) {
-//     console.log('Predicting...');
-//     setIsLoading(true);
-//     var url;
-//     if (page === 'diseaseDet') {
-//       url = endpoints.predictDisease;
-//     } else if (page === 'oliveDet') {
-//       url = endpoints.predictOlive;
-//     }
+  const pickImage = async () => {
+    // Richiedi permessi per accedere alla galleria
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
 
-//     try {
-//       // Resize the image to ensure it is under 1 MB
-//       const manipResult = await manipulateAsync(
-//         image,
-//         [{ resize: { width: 800 } }], // Adjust width as needed
-//         { compress: 0.8, format: SaveFormat.JPEG } // Adjust compression
-//       );
+    // Apri la galleria per selezionare un'immagine
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: false,
+      quality: 1,
+    });
 
-//       // Create a FormData object
-//       const formData = new FormData();
-//       // Append the resized image file to the FormData object
-//       formData.append('image', {
-//         uri: manipResult.uri,
-//         name: 'photo.jpg', // You can change the name as needed
-//         type: 'image/jpg', // You can change the type as needed
-//       });
-
-//       // Make the POST request
-//       const response = await fetch(url, {
-//         method: 'POST',
-//         body: formData,
-//       });
-//       console.log('Response:', response);
-//       // Handle the response
-//       if (!response.ok) {
-//         throw new Error('Network response was not ok');
-//       }
-//       const d = await response.json();
-//       setData(d);
-//     } catch (error) {
-//       console.error('Error saving picture:', error);
-//     }
-//     setIsLoading(false);
-//   }
-// }, [image, setData, setIsLoading, endpoints, page]);
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
   const savePicture = useCallback(async () => {
     if (image) {
@@ -112,29 +85,24 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, e
       }
 
       try {
-        // Resize the image to ensure it is under 1 MB
         const manipResult = await manipulateAsync(
           image,
-          [{ resize: { width: 800 } }], // Adjust width as needed
-          { compress: 0.8, format: SaveFormat.JPEG } // Adjust compression
+          [{ resize: { width: 800 } }],
+          { compress: 0.8, format: SaveFormat.JPEG }
         );
 
-        // Create a FormData object
         const formData = new FormData();
-        // Append the resized image file to the FormData object
         formData.append('image', {
           uri: manipResult.uri,
-          name: 'photo.jpg', // You can change the name as needed
-          type: 'image/jpg', // You can change the type as needed
+          name: 'photo.jpg',
+          type: 'image/jpg',
         });
 
-        // Make the POST request
         const response = await fetch(url, {
           method: 'POST',
           body: formData,
         });
         console.log('Response:', response);
-        // Handle the response
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -197,9 +165,14 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, e
 
       <View style={styles.controls}>
         {!image ? (
-          <TouchableOpacity style={styles.button} onPress={takePicture}>
-            <Text style={styles.textButton}>Snap a photo</Text>
-          </TouchableOpacity>
+          <>
+            <TouchableOpacity style={styles.button} onPress={takePicture}>
+              <Text style={styles.textButton}>Snap a photo</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={pickImage}>
+              <Text style={styles.textButton}>Select from Gallery</Text>
+            </TouchableOpacity>
+          </>
         ) : (
           <TouchableOpacity style={{...styles.button, backgroundColor: ilLoading ? 'gray' : '#A27B04'}}
             onPress={ () => {
@@ -224,28 +197,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   camera: {
-    marginTop: '10%',
-    flex: 0.7,
-    width: '95%',
+    flex: 0.70,
+    flexDirection: 'column',
+    width: '90%',
     borderRadius: 20,
   },
   arrow: {
     alignItems: 'center',
     flexDirection: 'row',
     position: 'absolute',
-    left: '0%',
-    bottom: '20%',
+    bottom: '5%',
+    left: '2%',
+
   },
   controls: {
-    flex: 0.25,
-    marginTop: '10%',
-    width: '95%',
+    flex: 0.15,
+    flexDirection: 'column',
+    margin: "10%",
+    width: '90%',
   },
   button: {
-    width: '100%',
     alignItems: 'center',
     backgroundColor: '#A27B04',
     borderRadius: 20,
+    marginBottom: 10, // Aggiungi un margine tra i pulsanti
   },
   textButton: {
     color: 'white',
@@ -254,7 +229,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   icon: {
-    flex: 0.35,
+    flex: 0.3,
+    flexDirection: 'column',
     width: '100%',
     alignItems: 'center',
   },
