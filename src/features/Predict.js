@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-export const Predict = ({ setPage, page, previous, setPrevious, predict }) => {
+export const Predict = ({ setPage, page, previous, setPrevious, predict, t }) => {
     console.log('Prediction:', predict);
 
     const DinamicPredict = useMemo(() => {
@@ -15,7 +15,7 @@ export const Predict = ({ setPage, page, previous, setPrevious, predict }) => {
                         ) : (
                             <Text style={styles.title}>{item.disease_name}</Text>
                         )}
-                        <Text style={styles.confidenceScore}>{Number(item.confidence_score)*100}% Confidence</Text>
+                        <Text style={styles.confidenceScore}>{Number(item.confidence_score)*100}% {t('confidence')}</Text>
                     </View>
                 </View>
             </View>
@@ -37,12 +37,12 @@ export const Predict = ({ setPage, page, previous, setPrevious, predict }) => {
                             <Image source={require('../../assets/ArrowWhite.png')} />
                         </TouchableOpacity>
                         <Text style={styles.pageTitle}>
-                            {page === 'olivePredict' ? 'Olive Detection' : 'Disease Detection'}
+                            {page === 'olivePredict' ? t('oliveDetection') : t('diseaseDetection')}
                         </Text>
                     </View>
                 </View>
                 <View style={styles.predictionContainer}>
-                    {predict.length > 0 ? DinamicPredict : <Text style={styles.noPredictions}>No detection available.</Text>}
+                    {predict.length > 0 ? DinamicPredict : <Text style={styles.noPredictions}>{t('noDetection')}</Text>}
                 </View>
             </View>
         );

@@ -10,7 +10,7 @@ import { Item } from '../components/Item';
 import { Searchbar } from 'react-native-paper';
 import { Icon } from 'react-native-elements';
 
-export const List = ({ setPage, page, previous, setPrevious, url, setInfoId }) => {
+export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t }) => {
   
   const [searchQuery, setSearchQuery] = useState('');
   const [data, setData] = useState([]);
@@ -105,7 +105,7 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId }) =
           <Image source={require('../../assets/LOGO.png')} />
         </View>
         <Searchbar
-          placeholder="Search"
+          placeholder={t('search')}
           onChangeText={setSearchQuery}
           value={searchQuery}
         />

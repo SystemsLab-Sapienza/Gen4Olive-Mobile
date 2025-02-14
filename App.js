@@ -64,15 +64,15 @@ export default function App() {
 
   // Map page state to corresponding component
   const pageComponents = {
-    menu: <Menu setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} endpoints={endpoints} />,
-    oliveList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} endpoints={endpoints} />,
-    diseaseList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} endpoints={endpoints} />,
-    oliveDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} setPrediction={setPredict} endpoints={endpoints} />,
-    diseaseDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} setPrediction={setPredict} endpoints={endpoints} />,
-    infoOlive: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} endpoints={endpoints} infoIdPrev={infoIdPrev} setInfoIdPrev={setInfoIdPrev} />,
-    infoDisease: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} endpoints={endpoints} infoIdPrev={infoIdPrev} setInfoIdPrev={setInfoIdPrev} />,
-    olivePredict: <Predict setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} predict={predict} endpoints={endpoints} />,
-    diseasePredict: <Predict setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} predict={predict} endpoints={endpoints} />,
+    menu: <Menu setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} endpoints={endpoints} t={t} />,
+    oliveList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} endpoints={endpoints} t={t} />,
+    diseaseList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} endpoints={endpoints} t={t} />,
+    oliveDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} setPrediction={setPredict} endpoints={endpoints} t={t} />,
+    diseaseDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} setPrediction={setPredict} endpoints={endpoints} t={t} />,
+    infoOlive: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} endpoints={endpoints} infoIdPrev={infoIdPrev} setInfoIdPrev={setInfoIdPrev} t={t} />,
+    infoDisease: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} endpoints={endpoints} infoIdPrev={infoIdPrev} setInfoIdPrev={setInfoIdPrev} t={t} />,
+    olivePredict: <Predict setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} predict={predict} endpoints={endpoints} t={t} />,
+    diseasePredict: <Predict setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} predict={predict} endpoints={endpoints} t={t} />,
   };
 
   return (

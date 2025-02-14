@@ -1,8 +1,9 @@
+import { t } from 'i18next';
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-export const Carousel = ({ api }) => {
+export const Carousel = ({ api, t }) => {
     const [currentTab, setCurrentTab] = React.useState('tree_photos');
     const [currentImage, setCurrentImage] = React.useState(0);
 
@@ -36,7 +37,7 @@ export const Carousel = ({ api }) => {
 
     return (
         <>
-            <Text style={styles.paragraphTitle}>Images</Text>
+            <Text style={styles.paragraphTitle}>{t('images')}</Text>
             <View style={styles.card}>
                 {/* Tab Section */}
                 <View style={styles.tabContainer}>
@@ -49,7 +50,7 @@ export const Carousel = ({ api }) => {
                                 setCurrentImage(0); // Reset to first image when changing tab
                             }}
                         >
-                            <Text style={styles.tabText}>{tab.split('_')[0]}</Text>
+                            <Text style={styles.tabText}>{t(tab.split('_')[0])}</Text>
                         </TouchableOpacity>
                     ))}
                 </View>
@@ -63,20 +64,22 @@ export const Carousel = ({ api }) => {
                             resizeMode="contain"
                         />
                     ) : (
-                        <Text>No images available</Text>
+                        <Text>{t('noImageAvailable')}</Text>
                     )}
                 </View>
-
+                
                 {/* Navigation Buttons */}
-                <View style={styles.navigationContainer}>
-                    <TouchableOpacity onPress={handlePrevImage} disabled={totalImages === 0}>
-                        <Icon name="arrow-back" />
-                    </TouchableOpacity>
-                    <Text>{`${currentImage + 1} / ${totalImages}`}</Text>
-                    <TouchableOpacity onPress={handleNextImage} disabled={totalImages === 0}>
-                        <Icon name="arrow-forward" />
-                    </TouchableOpacity>
-                </View>
+                {totalImages > 0 && (
+                    <View style={styles.navigationContainer}>
+                        <TouchableOpacity onPress={handlePrevImage} disabled={totalImages === 0}>
+                            <Icon name="arrow-back" />
+                        </TouchableOpacity>
+                        <Text>{`${currentImage + 1} / ${totalImages}`}</Text>
+                        <TouchableOpacity onPress={handleNextImage} disabled={totalImages === 0}>
+                            <Icon name="arrow-forward" />
+                        </TouchableOpacity>
+                    </View>
+                )}
             </View>
         </>
     );

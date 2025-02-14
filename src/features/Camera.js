@@ -3,8 +3,9 @@ import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker'; // Importa ImagePicker
+import { t } from 'i18next';
 
-export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, endpoints }) => {
+export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, endpoints, t }) => {
   
   const [permission, requestCameraPermission] = useCameraPermissions();
   const [data, setData] = useState(null);
@@ -57,7 +58,7 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, e
     // Richiedi permessi per accedere alla galleria
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
+      alert(t('cameraPermissionRequired'));
       return;
     }
 
@@ -130,11 +131,11 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, e
                 <Image source={require('../../assets/ArrowWhite.png')} />
             </TouchableOpacity>
             <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold'}}>
-                {page==='oliveDet' ? 'Olive Detection' : 'Disease Detection'}
+                {page==='oliveDet' ? t('oliveDetection') : t('diseaseDetection')}
             </Text>
         </View>
         </View>
-        <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', marginTop: "10%", textAlign: 'center', margin: "20%" }}> Camera permissions are required to use this feature </Text>
+        <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', marginTop: "10%", textAlign: 'center', margin: "20%" }}>{t('cameraPermissionRequired')}</Text>
       </View>
     );
   }
@@ -153,7 +154,7 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, e
                 <Image source={require('../../assets/ArrowWhite.png')} />
             </TouchableOpacity>
             <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold'}}>
-                {page==='oliveDet' ? 'Olive Detection' : 'Disease Detection'}
+                {page==='oliveDet' ? t('oliveDetection') : t('diseaseDetection')}
             </Text>
         </View>
       </View>
@@ -167,10 +168,10 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, e
         {!image ? (
           <>
             <TouchableOpacity style={styles.button} onPress={takePicture}>
-              <Text style={styles.textButton}>Snap a photo</Text>
+              <Text style={styles.textButton}>{t('takePicture')}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={pickImage}>
-              <Text style={styles.textButton}>Select from Gallery</Text>
+              <Text style={styles.textButton}>{t('selectGallery')}</Text>
             </TouchableOpacity>
           </>
         ) : (
@@ -181,7 +182,7 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, e
               }
             }}
           >
-            <Text style={styles.textButton}>{ilLoading ? 'Predicting...' : 'Predict'}</Text>
+            <Text style={styles.textButton}>{ilLoading ? t('detecting')+'...' : t('detect')}</Text>
           </TouchableOpacity>
         )}
       </View>

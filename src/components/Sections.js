@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
 
-export const Sections = ({ page, setInfo, info, usability }) => {
+export const Sections = ({ page, setInfo, info, usability, t }) => {
   const iconsData = [
-    { caption: 'Tolerance to Pests and Diseases', img: require('../../assets/BioticsColored.png'), info: 'pest_and_disease' },
-    { caption: 'Olive Oil Yield and Quality', img: require('../../assets/OilColored.png'), info: 'olive_yield' },
-    { caption: 'Agronomic Traits', img: require('../../assets/TreeColored.png'), info: 'agronomic_traits' },
-    { caption: 'Phenological Process Evaluation', img: require('../../assets/ProductivityColored.png'), info: 'phenological_process' },
-    { caption: 'Adaptability to Climate', img: require('../../assets/AbioticsColored.png'), info: 'climate_adaptability' },
-    { caption: 'Table Olive Aptitude', img: require('../../assets/FruitColored.png'), info: 'olive_fruit_aptitude' },
+    { caption: t('pestAndDisease'), img: require('../../assets/BioticsColored.png'), info: 'pest_and_disease' },
+    { caption: t('oliveYield'), img: require('../../assets/OilColored.png'), info: 'olive_yield' },
+    { caption: t('agronomicTraits'), img: require('../../assets/TreeColored.png'), info: 'agronomic_traits' },
+    { caption: t('phenologicalProcess'), img: require('../../assets/ProductivityColored.png'), info: 'phenological_process' },
+    { caption: t('climateAdaptability'), img: require('../../assets/AbioticsColored.png'), info: 'climate_adaptability' },
+    { caption: t('oliveFruitAptitude'), img: require('../../assets/FruitColored.png'), info: 'olive_fruit_aptitude' },
   ];
 
   // Split icons into two arrays, each representing a row

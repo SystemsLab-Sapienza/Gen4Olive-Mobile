@@ -6,7 +6,7 @@ import { SocialIcon, Icon } from 'react-native-elements';
 import { Linking } from 'react-native';
 import { Carousel } from '../components/Carousel';
 
-export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, endpoints, infoIdPrev, setInfoIdPrev }) => {
+export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, endpoints, infoIdPrev, setInfoIdPrev, t }) => {
   const [info, setInfo] = useState('pest_and_disease');
   const [api, setApi] = useState(null);
   const [varieties, setVarieties] = useState(null);
@@ -63,8 +63,8 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
           <View style={styles.nameImg}>
             <Text style={styles.name}>{api.name}</Text>
             <View style={{ marginTop: '5%', marginBottom: "5%" }}>
-              <Text>{'Synonyms: ' + api.synonyms.join(', ')}</Text>
-              <Text>{'Homonyms: ' + api.homonyms.join(', ')}</Text>
+              <Text>{t('synonyms') + ': ' + api.synonyms.join(', ')}</Text>
+              <Text>{t('homonyms') + ': ' + api.homonyms.join(', ')}</Text>
             </View>
             <View style={styles.location}>
               <Icon name='place' color='darkgreen' />
@@ -73,10 +73,9 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
             </View>
           </View>
         </View>
-        <Sections page={page} setInfo={setInfo} info={info} usability={api.usability} />
-        <Paragraph info={info} api={api} />
-        <Carousel api={api} />
-
+        <Sections page={page} setInfo={setInfo} info={info} usability={api.usability} t={t} />
+        <Paragraph info={info} api={api} t={t} />
+        <Carousel api={api} t={t} />
       </>
     );
   }, [api, info, page, setInfo]);
@@ -114,7 +113,7 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
           </View>
         </View>
         <View>
-          <Text style={styles.varietiesTitle}>Varieties</Text>
+          <Text style={styles.varietiesTitle}>{t('oliveVarieties')}</Text>
           <View style={styles.containerVarieties}>
             {varieties.map((variety, index) => (
               <TouchableOpacity 

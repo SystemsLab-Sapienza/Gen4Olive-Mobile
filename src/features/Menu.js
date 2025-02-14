@@ -2,13 +2,13 @@ import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { MenuButton } from '../components/MenuButton';
 
-export const Menu = ({ setPage, page, setPrevious, setUrl, endpoints }) => {
+export const Menu = ({ setPage, page, setPrevious, setUrl, endpoints, t }) => {
 
   const menuItems = [
-    { text: 'Olive Varieties', img: require('../../assets/Olive.png'), page: 'oliveList', url: endpoints.olives },
-    { text: 'Germplasm Banks', img: require('../../assets/Bank.png'), page: 'diseaseList', url: endpoints.banks },
-    { text: 'Olive Detection', img: require('../../assets/Camera.png'), page: 'oliveDet' },
-    { text: 'Disease Detection', img: require('../../assets/Camera.png'), page: 'diseaseDet' }
+    { text: t('oliveVarieties'), img: require('../../assets/Olive.png'), page: 'oliveList', url: endpoints.olives },
+    { text: t('germplasmBanks'), img: require('../../assets/Bank.png'), page: 'diseaseList', url: endpoints.banks },
+    { text: t('oliveDetection'), img: require('../../assets/Camera.png'), page: 'oliveDet' },
+    { text: t('diseaseDetection'), img: require('../../assets/Camera.png'), page: 'diseaseDet' }
   ];
 
 
