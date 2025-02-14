@@ -6,6 +6,37 @@ import Tooltip from "react-native-tooltip-2";
 export const Paragraph = ({ info, api }) => {
   let sectionTitle = '';
   let sectionData = [];
+  const descriptions = {
+    "xylella_fastidiosa": '1 - highly tolerant; 5 - highly susceptible; N.D - no data.',
+    "verticillium": '1 - highly tolerant; 5 - highly susceptible; N.D - no data.',
+    "olive_scab": '1 - highly tolerant; 5 - highly susceptible; N.D - no data.',
+    "olive_cercosporiose": '1 - highly tolerant; 5 - highly susceptible; N.D - no data.',
+    "olive_anthracnose": '1 - highly tolerant; 5 - highly susceptible; N.D - no data.',
+    "olive_fly": '1 - highly tolerant; 5 - highly susceptible; N.D - no data.',
+    "fatty_acid_profile": '1 - highly tolerant; 5 - highly susceptible; N.D - no data.',
+    "phenolic_profile": '1 - highly tolerant; 5 - highly susceptible; N.D - no data.',
+    "volatile_profile_green_notes": '1 - Light green hints (e.g., almond, apple); 5 - Strong and dominant green sensations (e.g., artichoke, olive leaf)',
+    "volatile_profile_fruit_intensity": '1 - soft and subtle fruitiness; 5 - very aromatic, robust fruitiness',
+    "oil_yield": '1 - low oil content; 5 - high oil content; N.D. - no data.',
+    "tree_vigour": 'Weak, Medium, Strong',
+    "tree_growth_habit": 'Upright, Spreading, Drooping',
+    "tree_density": 'Dense, Medium, Sparse',
+    "flowering_load": '1 - low flowering load; 5 - high flowering load; N.D - no data.',
+    "fruit_load": '1 - low fruit load; 5 - high fruit load; N.D - no data.',
+    "fruit_detachment_resistance": '1 - low fruit detachment resistance ; 5 - high fruit detachment resistance; N.D - no data.',
+    "fruit_average_weight": '1 - low fruit weight ; 5 - high fruit weight; N.D - no data.',
+    "budburst_time": '1 - early budburst; 5 - late budburst; N.D. - no data.',
+    "flowering_time": '1 - early flowering; 5 - late flowering; N.D. - no data.',
+    "ripening_time": '1 - early ripening; 5 - late ripening; N.D. - no data.',
+    "cold_tolerance": '1 -  highly tolerant; 5 - highly susceptible; N.D - no data.',
+    "drought_tolerance": '1 -  highly tolerant; 5 - highly susceptible; N.D - no data.',
+    "fruit_volume": '1 - low fruit volume; 5 - high fruit volume; N.D. - no data.',
+    "fruit_width": '1 - low fruit width; 5 - high fruit width; N.D. - no data.',
+    "fruit_length": '1 - low fruit length; 5 - high fruit length; N.D. - no data.',
+    "fruit_bruising_index": '1 - low fruit bruising index; 5 - high fruit bruising index; N.D. - no data.',
+    "fruit_shape_index": '1 - low fruit shape index; 5 - high fruit shape index; N.D. - no data. The shape index is calculated as the ratio between the length and width (mm).',
+    "fruit_symmetry": 'Symmetric, Slightly Asymmetrical, Asymmetrical',
+  };
 
   // Determine the section title and data based on the info prop
   switch (info) {
@@ -71,7 +102,7 @@ export const Paragraph = ({ info, api }) => {
                 isVisible={toolTipVisible[key]}
                 content={
                   <View>
-                    <Text>{key}</Text>
+                    <Text>{descriptions[key]}</Text>
                   </View>
                 }
                 placement={'top'}
