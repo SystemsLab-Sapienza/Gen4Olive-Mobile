@@ -35,47 +35,50 @@ export const Carousel = ({ api }) => {
     };
 
     return (
-        <View style={styles.card}>
-            {/* Tab Section */}
-            <View style={styles.tabContainer}>
-                {tabs().map((tab) => (
-                    <TouchableOpacity
-                        key={tab}
-                        style={[styles.tab, currentTab === tab && styles.activeTab]}
-                        onPress={() => {
-                            setCurrentTab(tab);
-                            setCurrentImage(0); // Reset to first image when changing tab
-                        }}
-                    >
-                        <Text style={styles.tabText}>{tab.split('_')[0]}</Text>
+        <>
+            <Text style={styles.paragraphTitle}>Images</Text>
+            <View style={styles.card}>
+                {/* Tab Section */}
+                <View style={styles.tabContainer}>
+                    {tabs().map((tab) => (
+                        <TouchableOpacity
+                            key={tab}
+                            style={[styles.tab, currentTab === tab && styles.activeTab]}
+                            onPress={() => {
+                                setCurrentTab(tab);
+                                setCurrentImage(0); // Reset to first image when changing tab
+                            }}
+                        >
+                            <Text style={styles.tabText}>{tab.split('_')[0]}</Text>
+                        </TouchableOpacity>
+                    ))}
+                </View>
+
+                {/* Image Display Section */}
+                <View style={styles.imageContainer}>
+                    {totalImages > 0 ? (
+                        <Image
+                            source={{ uri: currentImages[currentImage] }}
+                            style={{ ...styles.image, height: 200 }}
+                            resizeMode="contain"
+                        />
+                    ) : (
+                        <Text>No images available</Text>
+                    )}
+                </View>
+
+                {/* Navigation Buttons */}
+                <View style={styles.navigationContainer}>
+                    <TouchableOpacity onPress={handlePrevImage} disabled={totalImages === 0}>
+                        <Icon name="arrow-back" />
                     </TouchableOpacity>
-                ))}
+                    <Text>{`${currentImage + 1} / ${totalImages}`}</Text>
+                    <TouchableOpacity onPress={handleNextImage} disabled={totalImages === 0}>
+                        <Icon name="arrow-forward" />
+                    </TouchableOpacity>
+                </View>
             </View>
-
-            {/* Image Display Section */}
-            <View style={styles.imageContainer}>
-                {totalImages > 0 ? (
-                    <Image
-                        source={{ uri: currentImages[currentImage] }}
-                        style={{ ...styles.image, height: 200 }}
-                        resizeMode="contain"
-                    />
-                ) : (
-                    <Text>No images available</Text>
-                )}
-            </View>
-
-            {/* Navigation Buttons */}
-            <View style={styles.navigationContainer}>
-                <TouchableOpacity onPress={handlePrevImage} disabled={totalImages === 0}>
-                    <Icon name="arrow-back" />
-                </TouchableOpacity>
-                <Text>{`${currentImage + 1} / ${totalImages}`}</Text>
-                <TouchableOpacity onPress={handleNextImage} disabled={totalImages === 0}>
-                    <Icon name="arrow-forward" />
-                </TouchableOpacity>
-            </View>
-        </View>
+        </>
     );
 };
 
@@ -125,5 +128,12 @@ const styles = {
     navigationText: {
         fontSize: 16,
         color: 'blue',
+    },
+    paragraphTitle: {
+        fontSize: 25,
+        textAlign: 'center',
+        margin: '5%',
+        fontWeight: 'bold',
+        color: '#a87c04',
     },
 };

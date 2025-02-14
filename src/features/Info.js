@@ -73,9 +73,10 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
             </View>
           </View>
         </View>
-        <Carousel api={api} />
         <Sections page={page} setInfo={setInfo} info={info} usability={api.usability} />
         <Paragraph info={info} api={api} />
+        <Carousel api={api} />
+
       </>
     );
   }, [api, info, page, setInfo]);
