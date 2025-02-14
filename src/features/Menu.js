@@ -6,7 +6,7 @@ export const Menu = ({ setPage, page, setPrevious, setUrl, endpoints }) => {
 
   const menuItems = [
     { text: 'Olive Varieties', img: require('../../assets/Olive.png'), page: 'oliveList', url: endpoints.olives },
-    { text: 'Germplasm Banks', img: require('../../assets/Medicine.png'), page: 'diseaseList', url: endpoints.banks },
+    { text: 'Germplasm Banks', img: require('../../assets/Bank.png'), page: 'diseaseList', url: endpoints.banks },
     { text: 'Olive Detection', img: require('../../assets/Camera.png'), page: 'oliveDet' },
     { text: 'Disease Detection', img: require('../../assets/Camera.png'), page: 'diseaseDet' }
   ];
