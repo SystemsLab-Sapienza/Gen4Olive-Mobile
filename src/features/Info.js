@@ -6,7 +6,7 @@ import { SocialIcon, Icon } from 'react-native-elements';
 import { Linking } from 'react-native';
 import { Carousel } from '../components/Carousel';
 
-export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, endpoints }) => {
+export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, endpoints, infoIdPrev, setInfoIdPrev }) => {
   const [info, setInfo] = useState('pest_and_disease');
   const [api, setApi] = useState(null);
   const [varieties, setVarieties] = useState(null);
@@ -120,8 +120,9 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
                   key={index} 
                   style={styles.touchableOpacity} 
                   onPress={() => {
-                      setPrevious('menu');
+                      setPrevious('infoDisease');
                       setPage('infoOlive');
+                      setInfoIdPrev(api.pk);
                       setInfoId(variety.pk);
                       setApi(null);
                       fetchData();
@@ -142,8 +143,16 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
       <View style={styles.containerImg}>
         <TouchableOpacity
           onPress={() => {
-            setPage(previous);
-            setPrevious('menu');
+            if (infoIdPrev) {
+              setInfoId(infoIdPrev);
+              setInfoIdPrev(null);
+              setApi(null);
+              setPrevious('diseaseList');
+              setPage('infoDisease');
+            } else {
+              setPage(previous);
+              setPrevious('menu');
+            }
           }}>
           <Image source={require('../../assets/Arrow.png')} />
         </TouchableOpacity>
