@@ -95,7 +95,11 @@
             "fruitLengthDescription": "1 - low fruit length; 5 - high fruit length; N.D. - no data.",
             "fruitBruisingIndexDescription": "1 - low fruit bruising index; 5 - high fruit bruising index; N.D. - no data.",
             "fruitShapeIndexDescription": "1 - low fruit shape index; 5 - high fruit shape index; N.D. - no data. The shape index is calculated as the ratio between the length and width (mm).",
-            "fruitSymmetryDescription": "Symmetric, Slightly Asymmetrical, Asymmetrical"
+            "fruitSymmetryDescription": "Symmetric, Slightly Asymmetrical, Asymmetrical",
+
+            "footnoteTitle": "Funding and Licensing Information",
+            "footnoteMessage": "This project has received funding from the European Union's Horizon 2020 Research and Innovation Programme under Grant Agreement No. 101000427",
+            "close": "Close"
         }
     }
 }
