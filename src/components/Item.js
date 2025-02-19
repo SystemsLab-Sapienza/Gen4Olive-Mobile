@@ -8,7 +8,7 @@ export const Item = ({ imgUrl, title, caption, onPress }) => {
         <Image source={{ uri: imgUrl }} style={styles.img} />
         <View style={styles.cardText}>
           <Text style={styles.title}>{title}</Text>
-          {caption && <Text style={styles.caption}>{caption}</Text>}
+          {caption && <Text style={styles.caption}>{caption.slice(0, 30)}...</Text>}
         </View>
       </View>
     </TouchableOpacity>

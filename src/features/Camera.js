@@ -3,7 +3,6 @@ import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker'; // Importa ImagePicker
-import { t } from 'i18next';
 
 export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, endpoints, t }) => {
   

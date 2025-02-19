@@ -3,8 +3,10 @@ import {
   View,
   StyleSheet,
   Image,
-  ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
+  Text,
+  FlatList
 } from 'react-native';
 import { Item } from '../components/Item';
 import { Searchbar } from 'react-native-paper';
@@ -14,6 +16,8 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t }
   
   const [searchQuery, setSearchQuery] = useState('');
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [displayCount, setDisplayCount] = useState(10); // Number of items to display
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +36,8 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t }
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
@@ -43,7 +49,7 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t }
         if (item.name.toLowerCase().includes(searchQuery.toLowerCase())) {
           return true;
         }
-        for (synonym of item.synonyms){
+        for (const synonym of item.synonyms) {
           if (synonym.toLowerCase().includes(searchQuery.toLowerCase())) {
             return true;
           }
@@ -56,7 +62,7 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t }
     }
   }), [data, searchQuery, page]);
 
-  const renderItem = useMemo(() => (item) => {
+  const renderItem = ({ item }) => {
     switch (page) {
       case 'oliveList':
         return (
@@ -88,10 +94,14 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t }
       default:
         return null;
     }
-  }, [page, setPrevious, setPage]);
+  };
+
+  const loadMoreItems = () => {
+    setDisplayCount(prevCount => prevCount + 10); // Load 10 more items
+  };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.containerImg}>
           <TouchableOpacity
@@ -110,8 +120,21 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t }
           value={searchQuery}
         />
       </View>
-      {filteredData.map(renderItem)}
-    </ScrollView>
+      {loading ? (
+        <ActivityIndicator size="large" color="white" />
+      ) : (
+        <FlatList
+          data={filteredData.slice(0, displayCount)} // Display only the items to show
+          renderItem={renderItem}
+          keyExtractor={(item) => item.pk.toString()} // Assuming each item has a unique id
+          onEndReached={loadMoreItems} // Load more items when the end is reached
+          onEndReachedThreshold={0.5} // Trigger when the user is within 50% of the end
+          ListFooterComponent={filteredData.length > displayCount ? (
+            <ActivityIndicator size="small" color="white" />
+          ) : null} // Show loading indicator at the bottom if there are more items to load
+        />
+      )}
+    </View>
   );
 };
 
@@ -127,5 +150,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     margin: '5%',
-  }
+  },
 });
+
+export default List;
+

@@ -22,13 +22,22 @@ export default function App() {
   //   predictDisease: 'https://gen4olive-backend.vercel.app/api/mobile/predictdisease',
   // };
 
+  // const endpoints = {
+  //   olive: 'http://10.181.120.71:8000/mobile/olivevarieties/',
+  //   bank: 'http://10.181.120.71:8000/mobile/germplasmbanks/',
+  //   olives: 'http://10.181.120.71:8000/mobile/olivevarieties',
+  //   banks: 'http://10.181.120.71:8000/mobile/germplasmbankslist',
+  //   predictOlive: 'http://10.181.120.71:8000/mobile/predictvariety',
+  //   predictDisease: 'http://10.181.120.71:8000/mobile/predictdisease',
+  // };
+
   const endpoints = {
-    olive: 'http://10.181.120.71:8000/mobile/olivevarieties/',
-    bank: 'http://10.181.120.71:8000/mobile/germplasmbanks/',
-    olives: 'http://10.181.120.71:8000/mobile/olivevarieties',
-    banks: 'http://10.181.120.71:8000/mobile/germplasmbankslist',
-    predictOlive: 'http://10.181.120.71:8000/mobile/predictvariety',
-    predictDisease: 'http://10.181.120.71:8000/mobile/predictdisease',
+    olive: 'https://www.uco.es/ucolivo/gen4olive/mobile/olivevarieties/',
+    bank: 'https://www.uco.es/ucolivo/gen4olive/mobile/germplasmbanks/',
+    olives: 'https://www.uco.es/ucolivo/gen4olive/mobile/olivevarieties',
+    banks: 'https://www.uco.es/ucolivo/gen4olive/mobile/germplasmbankslist',
+    predictOlive: 'https://www.uco.es/ucolivo/gen4olive/mobile/predictvariety',
+    predictDisease: 'https://www.uco.es/ucolivo/gen4olive/mobile/predictdisease',
   };
 
 

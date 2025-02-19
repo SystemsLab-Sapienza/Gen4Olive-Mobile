@@ -30,6 +30,7 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
       const response = await fetch(url);
       const data = await response.json();
       setApi(data);
+      console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -43,6 +44,7 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
       const response = await fetch(endpoints.olives);
       const data = await response.json();
       setVarieties(data.olives);
+      // console.log(data.olives);
     } catch (error) {
       console.error(error);
     }
@@ -63,8 +65,8 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
           <View style={styles.nameImg}>
             <Text style={styles.name}>{api.name}</Text>
             <View style={{ marginTop: '5%', marginBottom: "5%" }}>
-              <Text>{t('synonyms') + ': ' + api.synonyms.join(', ')}</Text>
-              <Text>{t('homonyms') + ': ' + api.homonyms.join(', ')}</Text>
+              { api.synonyms.length > 0 && <Text>{t('synonyms') + ': ' + api.synonyms.join(', ')}</Text> }
+              { api.homonyms.length > 0 && <Text>{t('homonyms') + ': ' + api.homonyms.join(', ')}</Text> }
             </View>
             <View style={styles.location}>
               <Icon name='place' color='darkgreen' />
@@ -104,11 +106,14 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
               <Image source={{ uri: api.representative_photo_path }} style={{ width: '100%', height: 200, marginTop: '5%' }} />
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: '5%' }} >
-              <SocialIcon type='phone' light onPress={() => { Linking.openURL(`tel:${api.contact_point_contact}`) }} />
-              <SocialIcon type='globe' light onPress={() => { Linking.openURL(api.official_website_link) }} />
-              <SocialIcon type='facebook' light onPress={() => { Linking.openURL(api.facebook_link) }} />
-              <SocialIcon type='twitter' light onPress={() => { Linking.openURL(api.twitter_link) }} />
-              <SocialIcon type='linkedin' light onPress={() => { Linking.openURL(api.linkedin_link) }} />
+              { api.contact_point_contact.includes('@') ? 
+                api.contact_point_contact !== "NA" && <SocialIcon type='envelope' light onPress={() => { Linking.openURL(`mailto:${api.contact_point_contact}`) }} /> :
+                api.contact_point_contact !== "NA" && <SocialIcon type='phone' light onPress={() => { Linking.openURL(`tel:${api.contact_point_contact}`) }} />
+              }
+              {api.official_website_link !== "NA" && <SocialIcon type='globe' light onPress={() => { Linking.openURL(api.official_website_link) }} />}
+              {api.facebook_link !== "NA" && <SocialIcon type='facebook' light onPress={() => { Linking.openURL(api.facebook_link) }} />}
+              {api.twitter_link !== "NA" && <SocialIcon type='twitter' light onPress={() => { Linking.openURL(api.twitter_link) }} />}
+              {api.linkedin_link !== "NA" && <SocialIcon type='linkedin' light onPress={() => { Linking.openURL(api.linkedin_link) }} />}
             </View>
           </View>
         </View>
