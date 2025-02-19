@@ -25,7 +25,7 @@ export const Predict = ({ setPage, page, previous, setPrevious, predict, t, setP
                         ) : (
                             <Text style={styles.title}>{item.disease_name}</Text>
                         )}
-                        <Text style={styles.confidenceScore}>{Number(item.confidence_score)*100}% {t('confidence')}</Text>
+                        <Text style={styles.confidenceScore}>{(Number(item.confidence_score)*100).toFixed(2)}% {t('confidence')}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -41,7 +41,7 @@ export const Predict = ({ setPage, page, previous, setPrevious, predict, t, setP
                         <TouchableOpacity
                             onPress={() => {
                                 setPredict(null);
-                                setPage(previous);
+                                setPage(page === 'olivePredict' ? 'oliveDet' : 'diseaseDet');
                                 setPrevious('menu');
                             }}
                         >

@@ -123,8 +123,12 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, e
           <View style={styles.arrow}>
             <TouchableOpacity
                 onPress={() => {
-                setPage(previous);
-                setPrevious('menu');
+                  if (image !== null) {
+                    setImage(null);
+                  } else {
+                    setPage(previous);
+                    setPrevious('menu');
+                  }
                 }}
                 >
                 <Image source={require('../../assets/ArrowWhite.png')} />
@@ -146,8 +150,12 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, e
         <View style={styles.arrow}>
             <TouchableOpacity
                 onPress={() => {
-                setPage(previous);
-                setPrevious('menu');
+                  if (image !== null) {
+                    setImage(null);
+                  } else {
+                  setPage(previous);
+                  setPrevious('menu');
+                  }
                 }}
                 >
                 <Image source={require('../../assets/ArrowWhite.png')} />
