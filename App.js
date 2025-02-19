@@ -66,8 +66,8 @@ export default function App() {
     diseaseDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} setPrediction={setPredict} endpoints={endpoints} t={t} />,
     infoOlive: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} endpoints={endpoints} infoIdPrev={infoIdPrev} setInfoIdPrev={setInfoIdPrev} t={t} setUrl={setUrl} />,
     infoDisease: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} endpoints={endpoints} infoIdPrev={infoIdPrev} setInfoIdPrev={setInfoIdPrev} t={t} setUrl={setUrl} setBankAcronym={setBankAcronym} />,
-    olivePredict: <Predict setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} predict={predict} endpoints={endpoints} t={t} />,
-    diseasePredict: <Predict setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} predict={predict} endpoints={endpoints} t={t} />,
+    olivePredict: <Predict setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} predict={predict} endpoints={endpoints} t={t} setPredict={setPredict} setInfoId={setInfoId} />,
+    diseasePredict: <Predict setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} predict={predict} endpoints={endpoints} t={t} setPredict={setPredict} setInfoId={setInfoId} />,
   };
 
   return (

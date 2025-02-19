@@ -1,12 +1,22 @@
 import React, { useMemo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-export const Predict = ({ setPage, page, previous, setPrevious, predict, t }) => {
+export const Predict = ({ setPage, page, previous, setPrevious, predict, t, setPredict, setInfoId }) => {
     // console.log('Prediction:', predict);
 
     const DinamicPredict = useMemo(() => {
         return predict.map((item, index) => (
-            <View key={index} style={styles.item}>
+            <TouchableOpacity 
+                key={index} 
+                style={styles.item} 
+                onPress={() => {
+                    if (page === 'olivePredict') {
+                        setPrevious(page);
+                        setInfoId(item.pk);
+                        setPage('infoOlive');
+                    }
+                }
+            }>
                 <View style={styles.itemContent}>
                     <Image source={{ uri: item.thumbnail }} style={styles.img2} />
                     <View style={styles.cardText}>
@@ -18,9 +28,9 @@ export const Predict = ({ setPage, page, previous, setPrevious, predict, t }) =>
                         <Text style={styles.confidenceScore}>{Number(item.confidence_score)*100}% {t('confidence')}</Text>
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         ));
-    }, [predict]);
+    }, [predict, setPrevious, setInfoId, setPage, t, page]);
 
     if (page === 'olivePredict' || page === 'diseasePredict') {
         return (
@@ -30,6 +40,7 @@ export const Predict = ({ setPage, page, previous, setPrevious, predict, t }) =>
                     <View style={styles.arrow}>
                         <TouchableOpacity
                             onPress={() => {
+                                setPredict(null);
                                 setPage(previous);
                                 setPrevious('menu');
                             }}
