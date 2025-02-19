@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { View, StyleSheet, TouchableOpacity, Image, Text, ScrollView } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Image, Text, ScrollView  } from 'react-native';
 import { Sections } from '../components/Sections';
 import { Paragraph } from '../components/Paragraph';
 import { SocialIcon, Icon } from 'react-native-elements';
 import { Linking } from 'react-native';
 import { Carousel } from '../components/Carousel';
 
-export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, endpoints, infoIdPrev, setInfoIdPrev, t }) => {
+export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, endpoints, infoIdPrev, setInfoIdPrev, t, setUrl, setBankAcronym }) => {
   const [info, setInfo] = useState('pest_and_disease');
   const [api, setApi] = useState(null);
-  const [varieties, setVarieties] = useState(null);
 
   const fetchData = async () => {
     if (api) {
@@ -36,24 +35,9 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
     }
   };
 
-  const fetchVarieties = async () => {
-    if (page !== 'infoDisease' || varieties) {
-      return;
-    }
-    try {
-      const response = await fetch(endpoints.olives);
-      const data = await response.json();
-      setVarieties(data.olives);
-      // console.log(data.olives);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     fetchData();
-    fetchVarieties();
-  }, [page, infoId, setApi, setVarieties]);
+  }, [infoId, page]);
 
   const oliveInfo = useMemo(() => {
     if (api === null || page !== 'infoOlive') {
@@ -65,13 +49,16 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
           <View style={styles.nameImg}>
             <Text style={styles.name}>{api.name}</Text>
             <View style={{ marginTop: '5%', marginBottom: "5%" }}>
-              { api.synonyms.length > 0 && <Text>{t('synonyms') + ': ' + api.synonyms.join(', ')}</Text> }
-              { api.homonyms.length > 0 && <Text>{t('homonyms') + ': ' + api.homonyms.join(', ')}</Text> }
+              { api.synonyms.length > 0 && <Text style={{ marginRight: '5%' }}>{t('synonyms') + ': ' + api.synonyms.join(', ')}</Text> }
+              { api.homonyms.length > 0 && <Text style={{ marginRight: '5%' }}>{t('homonyms') + ': ' + api.homonyms.join(', ')}</Text> }
             </View>
             <View style={styles.location}>
-              <Icon name='place' color='darkgreen' />
-              <Text>{' '}</Text>
-              <Text>{api.origin_country}</Text>
+              <View>
+                <Icon name='place' color='darkgreen' />
+              </View>
+              <View>
+                <Text style={{ marginRight: '5%' }}>{api.origin_country}</Text>
+              </View>
             </View>
           </View>
         </View>
@@ -83,66 +70,64 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
   }, [api, info, page, setInfo]);
 
   const diseaseInfo = useMemo(() => {
-    if (api === null || page !== 'infoDisease' || varieties === null) {
+    if (api === null || page !== 'infoDisease') {
       return null;
     }
     return (
-      <>
-        <View style={styles.header}>
-          <View style={styles.nameImg}>
-            <Text style={styles.name}>{api.name} ({api.acronym})</Text>
-            <Text style={{ marginTop: '5%', marginBottom: "5%" }}>{api.description}</Text>
-            <View style={styles.location}>
-              <Icon name='place' color='darkgreen' />
-              <Text>{' '}</Text>
-              <Text>{api.address}, {api.city} ({api.country})</Text>
-            </View>
-            <View style={styles.location}>
-              <Icon name='person' color='darkgreen' />
-              <Text>{' '}</Text>
-              <Text>{api.contact_point}</Text>
-            </View>
-            <View style={styles.location}>
-              <Image source={{ uri: api.representative_photo_path }} style={{ width: '100%', height: 200, marginTop: '5%' }} />
-            </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: '5%' }} >
-              { api.contact_point_contact.includes('@') ? 
-                api.contact_point_contact !== "NA" && <SocialIcon type='envelope' light onPress={() => { Linking.openURL(`mailto:${api.contact_point_contact}`) }} /> :
-                api.contact_point_contact !== "NA" && <SocialIcon type='phone' light onPress={() => { Linking.openURL(`tel:${api.contact_point_contact}`) }} />
-              }
-              {api.official_website_link !== "NA" && <SocialIcon type='globe' light onPress={() => { Linking.openURL(api.official_website_link) }} />}
-              {api.facebook_link !== "NA" && <SocialIcon type='facebook' light onPress={() => { Linking.openURL(api.facebook_link) }} />}
-              {api.twitter_link !== "NA" && <SocialIcon type='twitter' light onPress={() => { Linking.openURL(api.twitter_link) }} />}
-              {api.linkedin_link !== "NA" && <SocialIcon type='linkedin' light onPress={() => { Linking.openURL(api.linkedin_link) }} />}
-            </View>
-          </View>
-        </View>
-        <View>
-          <Text style={styles.varietiesTitle}>{t('oliveVarieties')}</Text>
-          <View style={styles.containerVarieties}>
-            {varieties.map((variety, index) => (
-              <TouchableOpacity 
-                  key={index} 
-                  style={styles.touchableOpacity} 
-                  onPress={() => {
-                      setPrevious('infoDisease');
-                      setPage('infoOlive');
-                      setInfoIdPrev(api.pk);
-                      setInfoId(variety.pk);
-                      setApi(null);
-                      fetchData();
-                  }}
-              >
-                  <Image source={{ uri: variety.thumbnail }} style={styles.image} />
-                  <Text style={styles.text}>{variety.name}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-      </>
-    );
-  }, [api, info, page, setInfo, varieties, setPrevious, setInfoId, setPage]);
+      <View>
 
+      <View style={styles.header}>
+        <View style={styles.nameImg}>
+          <Text style={styles.name}>{api.name} ({api.acronym})</Text>
+          <Text style={{ marginTop: '5%', marginBottom: "5%" }}>{api.description}</Text>
+          <View style={styles.location}>
+            <View>
+              <Icon name='place' color='darkgreen' />
+            </View>
+            <View>
+              <Text style={{ marginRight: '5%' }}>{api.address}, {api.city} ({api.country})</Text>
+            </View>
+          </View>
+          <View style={styles.location}>
+            <View>
+              <Icon name='person' color='darkgreen' />
+            </View>
+            <View>
+              <Text style={{ marginRight: '5%' }}>{api.contact_point}</Text>
+            </View>
+          </View>
+          <View style={styles.location}>
+            <Image source={{ uri: api.representative_photo_path }} style={{ width: '100%', height: 200, marginTop: '5%' }} />
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: '5%' }} >
+            { api.contact_point_contact.includes('@') ? 
+              api.contact_point_contact !== "NA" && <SocialIcon type='envelope' light onPress={() => { Linking.openURL(`mailto:${api.contact_point_contact}`) }} /> :
+              api.contact_point_contact !== "NA" && <SocialIcon type='phone' light onPress={() => { Linking.openURL(`tel:${api.contact_point_contact}`) }} />
+            }
+            {api.official_website_link !== "NA" && <SocialIcon type='globe' light onPress={() => { Linking.openURL(api.official_website_link) }} />}
+            {api.facebook_link !== "NA" && <SocialIcon type='facebook' light onPress={() => { Linking.openURL(api.facebook_link) }} />}
+            {api.twitter_link !== "NA" && <SocialIcon type='twitter' light onPress={() => { Linking.openURL(api.twitter_link) }} />}
+            {api.linkedin_link !== "NA" && <SocialIcon type='linkedin' light onPress={() => { Linking.openURL(api.linkedin_link) }} />}
+          </View>
+        </View>
+      </View>
+      <View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            setPrevious(page);
+            setUrl(endpoints.olivesBank + api.pk + '/varieties');
+            setBankAcronym(api.acronym);
+            setPage('oliveListInBank');
+            setInfoId(api.pk);
+          }}>
+          <Text style={{ color: 'white', fontSize: 17, fontWeight: 'bold'}}>{t('oliveVarieties')} ({api.acronym})</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+    );
+  }, [api, info, page, setInfo, setPrevious, setInfoId, setPage, t, endpoints, setUrl, setBankAcronym]);
+  
   return (
     <ScrollView style={styles.container}>
       <View style={styles.containerImg}>
@@ -188,7 +173,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     margin: '5%',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     flexDirection: 'row',
   },
   nameImg: {
@@ -198,51 +183,22 @@ const styles = StyleSheet.create({
   },
   location: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   name: {
     fontSize: 25,
     fontWeight: 'bold',
     color: 'grey',
   },
-  varietiesTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'grey',
+  button: {
+    padding: '3%',
+    borderRadius: 10,
     marginLeft: '5%',
-    marginTop: '5%',
-  },
-  containerVarieties: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    marginTop: '5%',
-    marginBottom: '5%',
-  },
-  touchableOpacity: {
-    width: '30%',
-    margin: '2%',
-    backgroundColor: '#f6f6f6',
-    borderRadius: 10, // Match the border radius from DinamicPredict
-    padding: '2%',
+    marginRight: '5%',
+    marginBottom: '10%',
+    backgroundColor: '#A27B04',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'darkgreen',
-    elevation: 2, // Add shadow for Android
-    shadowColor: '#000', // Shadow for iOS
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
-  },
-  image: {
-    width: '100%',
-    height: 100,
-    borderRadius: 10, // Match the border radius from DinamicPredict
-  },
-  text: {
-    textAlign: 'center',
-    fontWeight: 'bold', // Optional: make the text bold for better readability
-    color: '#333', // Optional: darker text for better readability
-  },
+  }
 });
 
 export default Info;

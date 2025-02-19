@@ -5,14 +5,14 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
+  FlatList,
   Text,
-  FlatList
 } from 'react-native';
 import { Item } from '../components/Item';
 import { Searchbar } from 'react-native-paper';
 import { Icon } from 'react-native-elements';
 
-export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t }) => {
+export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t, bankAcronym }) => {
   
   const [searchQuery, setSearchQuery] = useState('');
   const [data, setData] = useState([]);
@@ -31,6 +31,10 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t }
           case 'diseaseList':
             setData(jsonData.gbanks);
             break;
+          case 'oliveListInBank':
+            setData(jsonData.olives);
+            console.log(jsonData);
+            break
           default:
             break;
         }
@@ -57,6 +61,16 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t }
         return false;
       case 'diseaseList':
         return item.acronym.toLowerCase().includes(searchQuery.toLowerCase());
+      case 'oliveListInBank':
+        if (item.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+          return true;
+        }
+        for (const synonym of item.synonyms) {
+          if (synonym.toLowerCase().includes(searchQuery.toLowerCase())) {
+            return true;
+          }
+        }
+        return false;
       default:
         return false;
     }
@@ -91,6 +105,20 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t }
             }}
           />
         );
+      case 'oliveListInBank':
+        return (
+          <Item
+            key={item.pk} // Assuming each olive has a unique id
+            imgUrl={item.thumbnail}
+            title={item.name}
+            caption={item.synonyms.join(', ')}
+            onPress={() => {
+              setPrevious(page);
+              setInfoId(item.pk);
+              setPage('infoOlive');
+            }}
+          />
+        );
       default:
         return null;
     }
@@ -114,6 +142,9 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t }
           </TouchableOpacity>
           <Image source={require('../../assets/LOGO.png')} />
         </View>
+        <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', marginLeft: '2%', marginBottom: '2%' }}>
+          {t(page === 'oliveList' || page === 'oliveListInBank' ? 'oliveVarieties' : 'germplasmBanks')}{page === 'oliveListInBank' ? ` (${bankAcronym})` : ''}
+        </Text>
         <Searchbar
           placeholder={t('search')}
           onChangeText={setSearchQuery}
@@ -141,7 +172,7 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t }
 const styles = StyleSheet.create({
   container: { flex: 1, margin: '3%' },
   header: {
-    height: 200,
+    height: 220,
     marginBottom: '5%',
     justifyContent: 'space-around',
   },

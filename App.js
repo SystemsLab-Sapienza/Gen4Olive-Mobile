@@ -13,33 +13,17 @@ import i18n from './src/i18n';
 
 export default function App() {
 
-  // const endpoints = {
-  //   olive: 'https://gen4olive-backend.vercel.app/api/mobile/olive?pk=',
-  //   bank: 'https://gen4olive-backend.vercel.app/api/mobile/germplasmbank?pk=',
-  //   olives: 'https://gen4olive-backend.vercel.app/api/mobile/olivevarieties',
-  //   banks: 'https://gen4olive-backend.vercel.app/api/mobile/germplasmbankslist',
-  //   predictOlive: 'https://gen4olive-backend.vercel.app/api/mobile/predictvariety',
-  //   predictDisease: 'https://gen4olive-backend.vercel.app/api/mobile/predictdisease',
-  // };
-
-  // const endpoints = {
-  //   olive: 'http://10.181.120.71:8000/mobile/olivevarieties/',
-  //   bank: 'http://10.181.120.71:8000/mobile/germplasmbanks/',
-  //   olives: 'http://10.181.120.71:8000/mobile/olivevarieties',
-  //   banks: 'http://10.181.120.71:8000/mobile/germplasmbankslist',
-  //   predictOlive: 'http://10.181.120.71:8000/mobile/predictvariety',
-  //   predictDisease: 'http://10.181.120.71:8000/mobile/predictdisease',
-  // };
+  const host = 'https://www.uco.es/ucolivo/gen4olive'
 
   const endpoints = {
-    olive: 'https://www.uco.es/ucolivo/gen4olive/mobile/olivevarieties/',
-    bank: 'https://www.uco.es/ucolivo/gen4olive/mobile/germplasmbanks/',
-    olives: 'https://www.uco.es/ucolivo/gen4olive/mobile/olivevarieties',
-    banks: 'https://www.uco.es/ucolivo/gen4olive/mobile/germplasmbankslist',
-    predictOlive: 'https://www.uco.es/ucolivo/gen4olive/mobile/predictvariety',
-    predictDisease: 'https://www.uco.es/ucolivo/gen4olive/mobile/predictdisease',
+    olive: host + '/mobile/olivevarieties/',
+    bank: host + '/mobile/germplasmbanks/',
+    olives: host + '/mobile/olivevarieties',
+    olivesBank: host + '/mobile/germplasmbanks/',
+    banks: host + '/mobile/germplasmbankslist',
+    predictOlive: host + '/mobile/predictvariety',
+    predictDisease: host + '/mobile/predictdisease',
   };
-
 
   // i18n
   const { t } = useTranslation();
@@ -56,6 +40,7 @@ export default function App() {
   const [infoId, setInfoId] = useState(null);
   const [predict, setPredict] = useState(null);
   const [infoIdPrev, setInfoIdPrev] = useState(null);
+  const [bankAcronym, setBankAcronym] = useState(null);
 
   // Lock orientation to PORTRAIT
   const lockOrientation = async () => {
@@ -76,10 +61,11 @@ export default function App() {
     menu: <Menu setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} endpoints={endpoints} t={t} />,
     oliveList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} endpoints={endpoints} t={t} />,
     diseaseList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} endpoints={endpoints} t={t} />,
+    oliveListInBank: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} endpoints={endpoints} t={t} bankAcronym={bankAcronym} />,
     oliveDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} setPrediction={setPredict} endpoints={endpoints} t={t} />,
     diseaseDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} setPrediction={setPredict} endpoints={endpoints} t={t} />,
-    infoOlive: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} endpoints={endpoints} infoIdPrev={infoIdPrev} setInfoIdPrev={setInfoIdPrev} t={t} />,
-    infoDisease: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} endpoints={endpoints} infoIdPrev={infoIdPrev} setInfoIdPrev={setInfoIdPrev} t={t} />,
+    infoOlive: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} endpoints={endpoints} infoIdPrev={infoIdPrev} setInfoIdPrev={setInfoIdPrev} t={t} setUrl={setUrl} />,
+    infoDisease: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} endpoints={endpoints} infoIdPrev={infoIdPrev} setInfoIdPrev={setInfoIdPrev} t={t} setUrl={setUrl} setBankAcronym={setBankAcronym} />,
     olivePredict: <Predict setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} predict={predict} endpoints={endpoints} t={t} />,
     diseasePredict: <Predict setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} predict={predict} endpoints={endpoints} t={t} />,
   };
