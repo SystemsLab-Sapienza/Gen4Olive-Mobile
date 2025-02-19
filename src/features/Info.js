@@ -115,33 +115,53 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            setPrevious(page);
+            setPrevious('infoDisease');
             setUrl(endpoints.olivesBank + api.pk + '/varieties');
             setBankAcronym(api.acronym);
             setPage('oliveListInBank');
-            setInfoId(api.pk);
+            setInfoIdPrev(api.pk);
           }}>
           <Text style={{ color: 'white', fontSize: 17, fontWeight: 'bold'}}>{t('oliveVarieties')} ({api.acronym})</Text>
         </TouchableOpacity>
       </View>
     </View>
     );
-  }, [api, info, page, setInfo, setPrevious, setInfoId, setPage, t, endpoints, setUrl, setBankAcronym]);
+  }, [api, page, setUrl, setPage, setPrevious, t, endpoints, setInfoIdPrev, setBankAcronym]);
   
   return (
     <ScrollView style={styles.container}>
       <View style={styles.containerImg}>
         <TouchableOpacity
           onPress={() => {
-            if (infoIdPrev) {
-              setInfoId(infoIdPrev);
-              setInfoIdPrev(null);
-              setApi(null);
-              setPrevious('diseaseList');
-              setPage('infoDisease');
-            } else {
-              setPage(previous);
-              setPrevious('menu');
+            switch (page) {
+              case 'infoOlive':
+                if (previous === 'oliveListInBank') {
+                  setUrl(endpoints.olivesBank + infoIdPrev + '/varieties');
+                  setPage('oliveListInBank');
+                  setPrevious('infoDisease');
+                  setInfoId(null);
+                }
+                if (previous === 'oliveList') {
+                  setPage('oliveList');
+                  setPrevious('menu');
+                  setInfoId(null);
+                }
+                if (previous === 'olivePredict') {
+                  setPage('olivePredict');
+                  setPrevious('oliveDet');
+                  setInfoId(null);
+                }
+                break;
+              case 'infoDisease':
+                setPage('diseaseList');
+                setPrevious('menu');
+                setUrl(endpoints.banks);
+                setInfoId(null);
+                setInfoIdPrev(null);
+                setBankAcronym(null);
+                break;
+              default:
+                break;
             }
           }}>
           <Image source={require('../../assets/Arrow.png')} />

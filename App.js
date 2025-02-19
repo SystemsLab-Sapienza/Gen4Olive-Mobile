@@ -59,9 +59,9 @@ export default function App() {
   // Map page state to corresponding component
   const pageComponents = {
     menu: <Menu setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} endpoints={endpoints} t={t} />,
-    oliveList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} endpoints={endpoints} t={t} />,
-    diseaseList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} endpoints={endpoints} t={t} />,
-    oliveListInBank: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} endpoints={endpoints} t={t} bankAcronym={bankAcronym} />,
+    oliveList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} endpoints={endpoints} t={t} infoIdPrev={infoIdPrev} setInfoIdPrev={setInfoIdPrev}/>,
+    diseaseList: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} endpoints={endpoints} t={t} infoIdPrev={infoIdPrev} setInfoIdPrev={setInfoIdPrev}/>,
+    oliveListInBank: <List setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} url={url} setUrl={setUrl} setInfoId={setInfoId} endpoints={endpoints} t={t} bankAcronym={bankAcronym} infoIdPrev={infoIdPrev} setInfoIdPrev={setInfoIdPrev}/>,
     oliveDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} setPrediction={setPredict} endpoints={endpoints} t={t} />,
     diseaseDet: <Picture setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} setPrediction={setPredict} endpoints={endpoints} t={t} />,
     infoOlive: <Info setPage={setPage} page={page} previous={previous} setPrevious={setPrevious} infoId={infoId} setInfoId={setInfoId} endpoints={endpoints} infoIdPrev={infoIdPrev} setInfoIdPrev={setInfoIdPrev} t={t} setUrl={setUrl} />,

@@ -12,7 +12,7 @@ import { Item } from '../components/Item';
 import { Searchbar } from 'react-native-paper';
 import { Icon } from 'react-native-elements';
 
-export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t, bankAcronym }) => {
+export const List = ({ setPage, page, setPrevious, url, setInfoId, t, bankAcronym, infoIdPrev, setInfoIdPrev }) => {
   
   const [searchQuery, setSearchQuery] = useState('');
   const [data, setData] = useState([]);
@@ -37,6 +37,7 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t, 
           default:
             break;
         }
+        setLoading(false);
       } catch (error) {
         console.error(error);
       } finally {
@@ -44,7 +45,7 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t, 
       }
     };
     fetchData();
-  }, [url]);
+  }, [url, page, setData, setLoading]);
 
   const filteredData = useMemo(() => data.filter((item) => {
     switch (page) {
@@ -85,7 +86,7 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t, 
             title={item.name}
             caption={item.synonyms.join(', ')}
             onPress={() => {
-              setPrevious(page);
+              setPrevious('oliveList');
               setInfoId(item.pk);
               setPage('infoOlive');
             }}
@@ -98,7 +99,7 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t, 
             imgUrl={item.thumbnail}
             title={item.acronym}
             onPress={() => {
-              setPrevious(page);
+              setPrevious('diseaseList');
               setInfoId(item.pk);
               setPage('infoDisease');
             }}
@@ -112,7 +113,7 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t, 
             title={item.name}
             caption={item.synonyms.join(', ')}
             onPress={() => {
-              setPrevious(page);
+              setPrevious('oliveListInBank');
               setInfoId(item.pk);
               setPage('infoOlive');
             }}
@@ -134,8 +135,24 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t, 
           <TouchableOpacity
             style={styles.arrow}
             onPress={() => {
-              setPage(previous);
-              setPrevious('menu');
+              switch (page) {
+                case 'oliveList':
+                  setPage('menu');
+                  setPrevious('menu');
+                  break;
+                case 'diseaseList':
+                  setPage('menu');
+                  setPrevious('menu');
+                  break;
+                case 'oliveListInBank':
+                  setInfoId(infoIdPrev);
+                  setInfoIdPrev(null);
+                  setPage('infoDisease');
+                  setPrevious('diseaseList');
+                  break;
+                default:
+                  break;
+              }
             }}>
             <Icon name="arrow-back" color={'white'} style={{ borderWidth: 1, borderColor: 'white', borderRadius: 20 , padding: 5}} />
           </TouchableOpacity>
