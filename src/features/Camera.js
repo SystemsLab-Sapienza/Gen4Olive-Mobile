@@ -23,7 +23,7 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, e
 
   useEffect(() => {
     if (data) {
-      console.log(data);
+      // console.log(data);
       switch (page) {
         case 'oliveDet':
           setPrevious(page);
@@ -45,7 +45,7 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, e
     if (cameraRef.current) {
       try {
         const { uri } = await cameraRef.current.takePictureAsync();
-        console.log(uri);
+        // console.log(uri);
         setImage(uri);
       } catch (error) {
         console.log(error);
@@ -75,7 +75,7 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, e
 
   const savePicture = useCallback(async () => {
     if (image) {
-      console.log('Predicting...');
+      // console.log('Predicting...');
       setIsLoading(true);
       var url;
       if (page === 'diseaseDet') {
@@ -102,7 +102,7 @@ export const Picture = ({ previous, setPage, setPrevious, page, setPrediction, e
           method: 'POST',
           body: formData,
         });
-        console.log('Response:', response);
+        // console.log('Response:', response);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 export const Predict = ({ setPage, page, previous, setPrevious, predict, t }) => {
-    console.log('Prediction:', predict);
+    // console.log('Prediction:', predict);
 
     const DinamicPredict = useMemo(() => {
         return predict.map((item, index) => (

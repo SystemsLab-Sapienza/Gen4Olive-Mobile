@@ -29,7 +29,7 @@ export const Info = ({ setPage, page, previous, setPrevious, infoId, setInfoId, 
       const response = await fetch(url);
       const data = await response.json();
       setApi(data);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       console.error(error);
     }

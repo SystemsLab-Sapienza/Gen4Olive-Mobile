@@ -33,7 +33,7 @@ export const List = ({ setPage, page, previous, setPrevious, url, setInfoId, t, 
             break;
           case 'oliveListInBank':
             setData(jsonData.olives);
-            console.log(jsonData);
+            // console.log(jsonData);
             break
           default:
             break;
