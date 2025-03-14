@@ -19,9 +19,9 @@
       "expo-localization"
     ],
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/adaptive-icon.png",
+      "backgroundColor": "#ffffff",
+      "imageWidth": 200
     },
     "assetBundlePatterns": [
       "**/*"
@@ -41,7 +41,7 @@
       "package": "com.cicciobello.snack42cab0cb946d40019706827cfac593fc"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.ico"
     },
     "extra": {
       "eas": {
